@@ -10,8 +10,8 @@ const ListaAmbulancias = ({ Ambulancia }) => {
       <td>xxxx</td>
       <td>134ds</td>
       <td>toyota</td>
-      <td>modeloX</td>
-      <td>1244</td>
+      <td>2010</td>
+      <td>si</td>
       <td>si</td>
       <td>bueno</td>
       
