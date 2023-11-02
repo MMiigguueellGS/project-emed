@@ -1,17 +1,58 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
+import axios from "axios";
 import Ambulancias from "./Ambulancias";
-import ModalCreateUpdate from "./ModalCreateUpdate";
-
+import ModalCreateUpdateAmbulancia from "./ModalCreateUpdateAmbulancia";
+const vaciarFormulario = {
+  redSalud:'',
+  microRed:'',
+  idEstablecimiento:'',
+  matricula:'',
+  marcaVehiculo:'', 
+  nPlaca: '',
+  modelo:'',
+  anioFabricacion:'',
+  propietario:'',
+  soat:'',
+  revicionTecnica:''
+}
 const AppAmbulancias = () => {
   const [isShowModal, setIsShowModal] = useState(false); // is -> esta mostrando el modal si ò no
-  // const [ambulancias, setAmbulancias] = useState([]);
+  const [ambulancias, setAmbulancias] = useState([]);
   const [isAmbulanciaToUpdate, setIsAmbulanciaToUpdate] = useState(null); // permite saber si hay informacion o no para editar
 
-  const ambulancias = [1,2,3,4,6]
-  const  handelCreateAmbulancia = ()=>{
-    setIsShowModal(true)
-  } 
+  const handelCreateAmbulancia = () => {
+    setIsShowModal(true);
+  };
+  const obtenerAmbulancias = () => {
+    const url = "http://localhost:8080/ambulancias";
+    axios
+      .get(url)
+      .then(({ data }) => setAmbulancias(data))
+      .catch((err) => console.log(err));
+  };
+  const crearAmbulancia = (newAmbulancia, reset) => {
+    const url = "http://localhost:8080/ambulancias";
+    axios
+      .post(url, newAmbulancia)
+      .then(({  }) => {
+        obtenerAmbulancias();
+        reset(vaciarFormulario);
+        setIsShowModal(false)
+      })
+      .catch((err) => console.log(err));
+  };
+  const eliminarAmbulancia = (id)=>{
+    const url = "http://localhost:8080/ambulancias";
+    axios
+      .delete(url+`/${id}`)
+      .then(() => obtenerAmbulancias())
+      .catch((err) => console.log(err));
+  }
+  useEffect(() => {
+    obtenerAmbulancias();
+  }, []);
+
   return (
     <section className=" mx-auto mt-16  w-full bg-[#D0EBEA] ">
       <h2 className="uppercase font-semibold text-4xl">Ambulancias</h2>
@@ -31,14 +72,20 @@ const AppAmbulancias = () => {
           </div>
         </form>
         <button onClick={handelCreateAmbulancia} className="cursor-pointer ">
-        <div className=" grid first-letter:h-15 bg-[#43A49B] p-2 text-center">
-          <i className="bx bx-plus-medical"></i>
-          Nuevo
-        </div>
+          <div className=" grid first-letter:h-15 bg-[#43A49B] p-2 text-center">
+            <i className="bx bx-plus-medical"></i>
+            Nuevo
+          </div>
         </button>
       </section>
-      <ModalCreateUpdate setIsShowModal={setIsShowModal} isShowModal={isShowModal}  setIsAmbulanciaToUpdate={setIsAmbulanciaToUpdate}  isAmbulanciaToUpdate={isAmbulanciaToUpdate}/>
-      <Ambulancias ambulancias={ambulancias ?? []}/>
+      <ModalCreateUpdateAmbulancia
+        setIsShowModal={setIsShowModal}
+        isShowModal={isShowModal}
+        setIsAmbulanciaToUpdate={setIsAmbulanciaToUpdate}
+        isAmbulanciaToUpdate={isAmbulanciaToUpdate}
+        crearAmbulancia={crearAmbulancia}
+      />
+      <Ambulancias ambulancias={ambulancias ?? []}  eliminarAmbulancia={eliminarAmbulancia} />
     </section>
   );
 };

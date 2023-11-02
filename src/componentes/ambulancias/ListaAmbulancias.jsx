@@ -1,27 +1,28 @@
 import React from "react";
 
-const ListaAmbulancias = ({ Ambulancia }) => {
+const Listaambulancias = ({ ambulancia,eliminarAmbulancia }) => {
+
   return (
-    <tr className="grid grid-cols-[repeat(12,_1fr)] grid-rows-1 gap-4 justify-center items-center">
-      <td>trujillo</td>
-      <td>el porvenir</td>
-      <td>1</td>
-      <td>12a3df</td>
-      <td>xxxx</td>
-      <td>134ds</td>
-      <td>toyota</td>
-      <td>2010</td>
-      <td>si</td>
-      <td>si</td>
-      <td>bueno</td>
-      
+    <tr className="grid grid-cols-[repeat(10,_1fr)] grid-rows-1 gap-4 justify-center items-center">
+      <td>{ambulancia.redSalud}</td>
+      {/* <td>{ambulancia.microRed}</td>
+      <td>{ambulancia.idEstablecimiento}</td>
+      <td>{ambulancia.matricula}</td> */}
+      <td>{ambulancia.marcaVehiculo}</td>
+      <td>{ambulancia.nPlaca}</td>
+      <td>{ambulancia.modelo}</td>
+      <td>{ambulancia.anioFabricacion}</td>
+      <td>{ambulancia.propietario}</td>
+      <td>{ambulancia.soat}</td>
+      <td>{ambulancia.revicionTecnica}</td>
+      <td>{ambulancia.condicion}</td>    
       
       <td>
         <button
           variant="danger"
           size="sm"
           className="me-1"
-          // onClick={() => deleteSong(song.id)}
+          onClick={() => eliminarAmbulancia(ambulancia.id)}
         >
           Delete
         </button>
@@ -35,4 +36,4 @@ const ListaAmbulancias = ({ Ambulancia }) => {
   );
 };
 
-export default ListaAmbulancias;
+export default Listaambulancias;
