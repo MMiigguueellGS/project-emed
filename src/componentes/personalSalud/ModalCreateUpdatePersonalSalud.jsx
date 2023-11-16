@@ -229,8 +229,7 @@ const ModalCreateUpdatePersonalSalud = ({
           idCondicion: isPersonalSaludToUpdate.idCondicion,
           localidad: isPersonalSaludToUpdate.localidad,
       });
-      
-    }
+       }
   }, [isPersonalSaludToUpdate]);
 
   return (

@@ -4,23 +4,23 @@ import axios from "axios";
 import ModalCreateUpdateEvento from "./ModalCreateUpdateEvento";
 import Evento from "./Evento";
 const vaciarFormulario = {
-  redSalud: "",
-  microRed: "",
+  nombre: "",
+  tipoEvento: "",
   idEstablecimiento: "",
-  matricula: "",
-  marcaVehiculo: "",
-  nPlaca: "",
-  modelo: "",
-  anioFabricacion: "",
-  propietario: "",
-  soat: false,
-  revicionTecnica: false,
+  fechaEvento: "",
+  horaEvento: "",
+  provincia: "",
+  distrito: "",
+  lesionados: "",
+  fallecidos: "",
+  desaparecidos: "",
+  idUbigueoInei: "",
 };
 const AppEventos = () => {
   const [isShowModal, setIsShowModal] = useState(false); // is -> esta mostrando el modal si ò no
   const [Evento, setEvento] = useState([]);
   const [isEventoToUpdate, setIsEventoToUpdate] = useState(null); // permite saber si hay informacion o no para editar
-
+ 
   const handelCreateEvento = () => {
     setIsShowModal(true);
   };

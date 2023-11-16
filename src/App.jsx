@@ -27,7 +27,7 @@ function App() {
           <nav className="bg-[#728f9e]  h-14 min-w-full fixed ">
             <ul className="flex justify-center items-center  text-white ">
               <li className=" sm:w-40 w-24  bg-[#728f9e] py-4 px-2 text-center mr-[1px] hover:text-[#cdfaf6] hover:bg-[#43A49B]">
-                <Link to="/">HOME</Link>
+                <Link to="/">BIENVENIDOS</Link>
               </li>
               <li className="sm:w-40 w-24  bg-[#728f9e] py-4 px-2 text-center mr-[2px] hover:text-[#cdfaf6] hover:bg-[#43A49B]">
                 <Link to="/registros">REGISTROS</Link>
