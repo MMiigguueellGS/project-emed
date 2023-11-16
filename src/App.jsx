@@ -4,6 +4,9 @@ import axios from "axios";
 import { Link, Route, Routes } from "react-router-dom";
 import Home from "./paginas/Home";
 import AppAmbulancias from "./componentes/ambulancias/AppAmbulancias";
+import AppPersonalSalud from "./componentes/personalSalud/AppPersonalSalud";
+import Registros from "./paginas/Registros";
+import AppEventos from "./componentes/eventos/AppEventos";
 
 function App() {
   useEffect(() => {
@@ -27,7 +30,7 @@ function App() {
                 <Link to="/">HOME</Link>
               </li>
               <li className="sm:w-40 w-24  bg-[#728f9e] py-4 px-2 text-center mr-[2px] hover:text-[#cdfaf6] hover:bg-[#43A49B]">
-                <Link to="/">REGISTROS</Link>
+                <Link to="/registros">REGISTROS</Link>
               </li>
               <li className="sm:w-40 w-24  bg-[#728f9e] py-4 px-2 text-center hover:text-[#cdfaf6] hover:bg-[#43A49B]">
                 <Link to="/">REPORTES</Link>
@@ -38,7 +41,11 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/registros" element={<Registros/> }/>
           <Route path="/ambulancias" element={<AppAmbulancias/> }/>
+          <Route path="/personalSalud" element={<AppPersonalSalud/> }/>
+          <Route path="/eventos" element={<AppEventos/> }/>
+          
           <Route path="/dashbord" element="" />
         </Routes>
         <footer className="h-14 bg-[#728f9e] text-white">Mi Fotter</footer>

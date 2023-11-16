@@ -1,10 +1,10 @@
 import React from "react";
 
-const Listaambulancias = ({ ambulancia,eliminarAmbulancia }) => {
+const Listaambulancias = ({ ambulancia,eliminarAmbulancia,handleActualizar }) => {
 
   return (
     <tr className="grid grid-cols-[repeat(10,_1fr)] grid-rows-1 gap-4 justify-center items-center">
-      <td>{ambulancia.redSalud}</td>
+      <td className="lowercase">{ambulancia.redSalud}</td>
       {/* <td>{ambulancia.microRed}</td>
       <td>{ambulancia.idEstablecimiento}</td>
       <td>{ambulancia.matricula}</td> */}
@@ -13,8 +13,8 @@ const Listaambulancias = ({ ambulancia,eliminarAmbulancia }) => {
       <td>{ambulancia.modelo}</td>
       <td>{ambulancia.anioFabricacion}</td>
       <td>{ambulancia.propietario}</td>
-      <td>{ambulancia.soat}</td>
-      <td>{ambulancia.revicionTecnica}</td>
+      <td>{ambulancia.soat? "SI" : "NO"}</td>
+      <td>{ambulancia.revicionTecnica? "SI" : "NO"}</td>
       <td>{ambulancia.condicion}</td>    
       
       <td>
@@ -27,7 +27,7 @@ const Listaambulancias = ({ ambulancia,eliminarAmbulancia }) => {
           Delete
         </button>
         <button variant="warning" size="sm"
-        //  onClick={() => selectSong(song)}
+         onClick={() => handleActualizar(ambulancia)}
          >
           Update
         </button>

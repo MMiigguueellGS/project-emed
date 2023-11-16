@@ -4,18 +4,18 @@ import axios from "axios";
 import Ambulancias from "./Ambulancias";
 import ModalCreateUpdateAmbulancia from "./ModalCreateUpdateAmbulancia";
 const vaciarFormulario = {
-  redSalud:'',
-  microRed:'',
-  idEstablecimiento:'',
-  matricula:'',
-  marcaVehiculo:'', 
-  nPlaca: '',
-  modelo:'',
-  anioFabricacion:'',
-  propietario:'',
-  soat:'',
-  revicionTecnica:''
-}
+  redSalud: "",
+  microRed: "",
+  idEstablecimiento: "",
+  matricula: "",
+  marcaVehiculo: "",
+  nPlaca: "",
+  modelo: "",
+  anioFabricacion: "",
+  propietario: "",
+  soat: false,
+  revicionTecnica: false,
+};
 const AppAmbulancias = () => {
   const [isShowModal, setIsShowModal] = useState(false); // is -> esta mostrando el modal si ò no
   const [ambulancias, setAmbulancias] = useState([]);
@@ -35,20 +35,37 @@ const AppAmbulancias = () => {
     const url = "http://localhost:8080/ambulancias";
     axios
       .post(url, newAmbulancia)
-      .then(({  }) => {
+      .then(({}) => {
         obtenerAmbulancias();
         reset(vaciarFormulario);
-        setIsShowModal(false)
+        setIsShowModal(false);
       })
       .catch((err) => console.log(err));
   };
-  const eliminarAmbulancia = (id)=>{
+  const eliminarAmbulancia = (id) => {
     const url = "http://localhost:8080/ambulancias";
     axios
-      .delete(url+`/${id}`)
+      .delete(url + `/${id}`)
       .then(() => obtenerAmbulancias())
       .catch((err) => console.log(err));
-  }
+  };
+  const actualizarAmbulancia = (Ambulancia, reset) => {
+    const url = "http://localhost:8080/ambulancias";
+    axios
+      .put(url + `/${Ambulancia.id}`, Ambulancia)
+      .then(({}) => {
+        obtenerAmbulancias();
+        reset(vaciarFormulario);
+        setIsShowModal(false);
+        setIsAmbulanciaToUpdate(null)
+      })
+      .catch((err) => console.log(err));
+  };
+  const handleActualizar = (ambulancia) => {
+    console.log(ambulancia);
+    setIsShowModal(true);
+    setIsAmbulanciaToUpdate(ambulancia);
+  };
   useEffect(() => {
     obtenerAmbulancias();
   }, []);
@@ -62,12 +79,10 @@ const AppAmbulancias = () => {
             <i className="bx bx-search-alt-2 text-white text-lg"></i>
             <input
               id="countryName"
-              className="outline-none flex-1 bg-white"
+              className="outline-none flex-1 bg-white placeholder:text-[#26A69A] text-[#26A69A] font-semibold"
               placeholder="Ingresa la placa..."
               type="text"
               autoComplete="off"
-              // onChange={handleChangeCountryName}
-              // value={countryName}
             />
           </div>
         </form>
@@ -84,8 +99,14 @@ const AppAmbulancias = () => {
         setIsAmbulanciaToUpdate={setIsAmbulanciaToUpdate}
         isAmbulanciaToUpdate={isAmbulanciaToUpdate}
         crearAmbulancia={crearAmbulancia}
+        actualizarAmbulancia={actualizarAmbulancia}
+        vaciarFormulario={vaciarFormulario}
       />
-      <Ambulancias ambulancias={ambulancias ?? []}  eliminarAmbulancia={eliminarAmbulancia} />
+      <Ambulancias
+        ambulancias={ambulancias ?? []}
+        eliminarAmbulancia={eliminarAmbulancia}
+        handleActualizar={handleActualizar}
+      />
     </section>
   );
 };

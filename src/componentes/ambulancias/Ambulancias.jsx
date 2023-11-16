@@ -1,7 +1,7 @@
 import React from 'react'
 import ListaAmbulancias from './ListaAmbulancias'
 
-const Ambulancias = ({ambulancias,eliminarAmbulancia}) => {
+const Ambulancias = ({ambulancias,eliminarAmbulancia,handleActualizar}) => {
  
   return (
     <div className='grid justify-center'>
@@ -29,7 +29,7 @@ const Ambulancias = ({ambulancias,eliminarAmbulancia}) => {
                 
                 
                      {
-                      ambulancias.map((ambulancia) =>  <ListaAmbulancias key={ambulancia.id} ambulancia = {ambulancia ?? []} eliminarAmbulancia ={eliminarAmbulancia} /> )
+                      ambulancias.map((ambulancia) =>  <ListaAmbulancias key={ambulancia.id} ambulancia = {ambulancia ?? []} eliminarAmbulancia ={eliminarAmbulancia} handleActualizar={handleActualizar} /> )
                      }
                 
                 

@@ -2,13 +2,15 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-// import { useForm } from "react-hook-form"
+
 const ModalCreateUpdateAmbulancia = ({
   setIsShowModal,
   isShowModal,
   setIsAmbulanciaToUpdate,
   isAmbulanciaToUpdate,
-  crearAmbulancia
+  crearAmbulancia,
+  actualizarAmbulancia,
+  vaciarFormulario
 }) => {
   // const {handleSubmit, register, reset, formState:{errors}} = useForm();
   const [isRed, setIsRed] = useState(null);
@@ -16,10 +18,7 @@ const ModalCreateUpdateAmbulancia = ({
   const [isEstablecimiento, setIsEstablecimiento] = useState([]);
   const [redMrEeSs, setRedMrEeSs] = useState(null);
   const [codiRed, setCodiRed] = useState("");
-
-  const {handleSubmit,register,reset,setValue} = useForm()
-  const { onChange, onBlur, name, ref } = register('redSalud')
-
+  const { handleSubmit, register, reset, setValue } = useForm();
 
   const obtenerRedMicroredEeSs = () => {
     const url = "http://localhost:8080/establecimientos";
@@ -62,7 +61,7 @@ const ModalCreateUpdateAmbulancia = ({
 
   const changeSelectRed = (e) => {
     setCodiRed(e.target.value); //Actualiza el estado del codigo de la red
-    console.log(e.target.value)
+    console.log(e.target.value);
     const dataMicroRed = redMrEeSs.map((elem) => ({
       codiMicroRed: elem.codiMicroRed,
       microRed: elem.microRed,
@@ -87,30 +86,41 @@ const ModalCreateUpdateAmbulancia = ({
       (elem) => elem.red === e.target.value
     );
     setIsMicroRed(microRed);
-    setValue('redSalud',e.target.value)
+    setValue("redSalud", e.target.value);
   };
 
   const changeSelectMicroRed = (e) => {
-   
     const establecimientos = redMrEeSs.filter(
       (elem) => elem.red === codiRed && elem.microRed === e.target.value
     );
     setIsEstablecimiento(establecimientos);
-    setValue('microRed',e.target.value)
+    setValue("microRed", e.target.value);
   };
 
   // dispara el modal setIsShowModal = true se mostrara
   const handleClickCloseModal = () => {
     setIsShowModal(false);
     setIsAmbulanciaToUpdate(null);
+    reset(vaciarFormulario)
   };
+  const limpiarFormulario = ()=>{
+    reset(vaciarFormulario)
+  }
   const submit = (data) => {
-    crearAmbulancia(data,reset)
+     
+    if(isAmbulanciaToUpdate){actualizarAmbulancia(data,reset)}
+    else{crearAmbulancia(data, reset)}
+    
   };
 
   useEffect(() => {
     obtenerRedMicroredEeSs();
   }, []);
+  useEffect(() => {
+    if(isAmbulanciaToUpdate){
+      reset(isAmbulanciaToUpdate)
+    }
+  }, [isAmbulanciaToUpdate]);
 
   return (
     <section
@@ -131,24 +141,21 @@ const ModalCreateUpdateAmbulancia = ({
         >
           <i className="bx bx-x-circle text-[#263339] text-2xl font-semibold"></i>
         </button>
-
         <h2 className="text-center uppercase text-[#263339] font-bold text-2xl">
           {isAmbulanciaToUpdate ? "Editar Ambulancia" : "Crear Ambulancia"}
         </h2>
-
         <div className="grid grid-cols-1  sm:grid-cols-2 ">
           <section className=" grid justify-center">
             <div className="flex gap-2 ">
               {/* <label htmlFor="password">Micro red</label> */}
               <select
-               
                 className="outline-none   bg-transparent   capitalize text-[#26A69A] font-semibold"
-                name='redSalud'
-                {...register('redSalud', {
-                  onChange: (e) => changeSelectRed(e)
+                name="redSalud"
+                {...register("redSalud", {
+                  onChange: (e) => changeSelectRed(e),
                 })}
               >
-                <option value="">Selecciona tu red</option>
+                <option value="">{isAmbulanciaToUpdate? isAmbulanciaToUpdate.redSalud:"Selecciona tu red"}</option>
                 {redMrEeSs &&
                   isRed.map((elem) => (
                     <option key={elem.codiRed} value={elem.red}>
@@ -159,14 +166,13 @@ const ModalCreateUpdateAmbulancia = ({
             </div>
             <div className="flex gap-2 ">
               <select
-                
                 className="outline-none   bg-transparent   capitalize text-[#26A69A] font-semibold"
-                name='microRed'
-                {...register('microRed', {
-                  onChange: (e) => changeSelectMicroRed(e)
+                name="microRed"
+                {...register("microRed", {
+                  onChange: (e) => changeSelectMicroRed(e),
                 })}
               >
-                <option value="">Selecciona tu Micro Red</option>
+                <option value="">{isAmbulanciaToUpdate? isAmbulanciaToUpdate.microRed:"Selecciona tu microRed"}</option>
                 {redMrEeSs &&
                   isMicroRed?.map((elem) => (
                     <option
@@ -180,10 +186,11 @@ const ModalCreateUpdateAmbulancia = ({
               </select>
             </div>
             <div className="flex gap-2 ">
-              <select className="outline-none   bg-transparent  capitalize text-[#26A69A] font-semibold"
-              name='idEstablecimiento'
-             {...register('idEstablecimiento')}
-                >
+              <select
+                className="outline-none   bg-transparent  capitalize text-[#26A69A] font-semibold"
+                name="idEstablecimiento"
+                {...register("idEstablecimiento")}
+              >
                 <option value="">Selecciona tu Establecimiento</option>
                 {redMrEeSs &&
                   isEstablecimiento.map((elem) => (
@@ -205,7 +212,7 @@ const ModalCreateUpdateAmbulancia = ({
                 name="matricula"
                 type="text"
                 placeholder="Matricula ..."
-              {...register("matricula")}
+                {...register("matricula")}
               />
             </div>
             <div className="flex gap-2 ">
@@ -263,15 +270,25 @@ const ModalCreateUpdateAmbulancia = ({
             <section>
               <div className="flex gap-4  ">
                 <label> Soat Vigente</label>
-                <input type="checkbox" name="soat" value="Si"  {...register('soat')}/>
+                <input
+                  type="checkbox"
+                  name="soat"
+                  value={true}
+                  {...register("soat")}
+                />
               </div>
               <div className="flex gap-4  ">
                 <label> Revision Tecnica</label>
-                <input type="checkbox" name="revicionTecnica" value="Si" {...register('revicionTecnica')} />
+                <input
+                  type="checkbox"
+                  name="revicionTecnica"
+                  value={true}
+                  {...register("revicionTecnica")}
+                />
               </div>
               <div className="flex gap-2  ">
                 <label htmlFor="">Condicion</label>
-                <select  name="condicion" {...register('condicion')}  >
+                <select name="condicion" {...register("condicion")}>
                   <option value="bueno">Bueno</option>
                   <option value="regular">Regular</option>
                   <option value="malo">Malo</option>
@@ -285,7 +302,7 @@ const ModalCreateUpdateAmbulancia = ({
           <button className=" rounded-md text-[#43A49B] bg-[#263339] py-2 px-2">
             {isAmbulanciaToUpdate ? "Guardar Cambios" : "Crear "}
           </button>
-          <button className="rounded-md  text-[#43A49B] bg-[#263339] py-2 px-2">
+          <button onClick={limpiarFormulario} className="rounded-md  text-[#43A49B] bg-[#263339] py-2 px-2">
             Limpiar
           </button>
         </section>
