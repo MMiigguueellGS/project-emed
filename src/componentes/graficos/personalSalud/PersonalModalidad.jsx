@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import ListaReportes from "../../layout/ListaReportes";
 const PersonalModalidad = () => {
   const [personasModalidad, setPersonasModalidad] = useState(null);
 
@@ -44,7 +45,9 @@ const obtenerDatosParaGrafico = (datos)=>{
   }, []);
 
   return (
-    <div className=" shadow-xl shadow-blur w-[450px] h-[500px] mt-20 hover:scale-110">
+   <section className="flex gap-8  px-8">
+     <ListaReportes/>
+     <div className=" shadow-xl shadow-blur w-[450px] h-[500px] mt-20 hover:scale-110">
       <h2 className="text-center text-gray-800 font-light text-2xl">Reporte Modalidad de contrato</h2>
     {personasModalidad&&
     
@@ -72,6 +75,7 @@ const obtenerDatosParaGrafico = (datos)=>{
      </ResponsiveContainer>
     }
     </div>
+   </section>
   );
 };
 

@@ -11,6 +11,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import ListaReportes from "../../layout/ListaReportes";
 
 const PersonalBrigadistas = () => {
   const [numBrigadista, setNumBrigadista] = useState(null);
@@ -40,6 +41,8 @@ const PersonalBrigadistas = () => {
   }, []);
 
   return (
+  <section className="flex gap-8  px-8" >
+  <ListaReportes/>
   <section className="mt-20 rounded-lg shadow-xl shadow-blur w-[450px] h-[500px] hover:scale-110" >
     <h2 className="text-center text-gray-800 font-light text-2xl">Reporte Numero de Brigadistas</h2>
       <ResponsiveContainer width={450} aspect={1}>
@@ -69,6 +72,7 @@ const PersonalBrigadistas = () => {
 
  
   </ResponsiveContainer>
+  </section>
   </section>
 );
   
