@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import SugerenciaRed from "../layout/SugerenciaRed";
 import SugerenciaMicroRed from "../layout/SugerenciaMicroRed";
 import SugerenciaEstablecimiento from "../layout/SugerenciaEstablecimiento";
+import SugerenciasProfesion from "../layout/SugerenciasProfesion";
 
 const ModalCreateUpdatePersonalSalud = ({
   setIsShowModal,
@@ -20,6 +21,8 @@ const ModalCreateUpdatePersonalSalud = ({
   setValorInputMicroRed,
   valorInputEstablecimiento,
   setValorInputEstablecimiento,
+  valorInputProfesion,
+  setValorInputProfesion,
 }) => {
   // const {handleSubmit, register, reset, formState:{errors}} = useForm();
   //RED
@@ -35,6 +38,9 @@ const ModalCreateUpdatePersonalSalud = ({
   const { handleSubmit, register, reset, setValue } = useForm();
   const [contratos, setContratos] = useState([]);
   const [brigadista, setBrigadista] = useState("");
+
+  const [profesionInput, setProfesionInput] = useState(null)
+  const [profesiones, setProfesiones] = useState([]);
 
   const obtenerRedMicroredEeSs = () => {
     const url = "http://localhost:8080/establecimientos";
@@ -174,6 +180,51 @@ const ModalCreateUpdatePersonalSalud = ({
     setValue("idEstablecimiento", idEstablecimiento);
     setEstablecimientoInput(null);
   };
+  const obtenerProfesiones = () => {
+    const url = "http://localhost:8080/profesiones";
+    axios
+      .get(url)
+      .then(({ data }) => setProfesiones(data))
+      .catch((err) => console.log(err));
+  };
+
+  const onChangeProfesion = (e) => {
+    const profesionABuscar = e.target.value;
+    if (profesionABuscar !== "") {
+      const nombresProfesiones = profesiones
+        .filter((profesion) =>
+          profesion.descripcion.toLowerCase().includes(valorInputProfesion)
+        )
+        .map((profesion) => profesion.descripcion.toLowerCase());
+
+      const sugerenciasProfesion = nombresProfesiones.filter((profesion) =>
+        profesion.toLowerCase().includes(profesionABuscar)
+      );
+      console.log(profesionABuscar)
+      setProfesionInput(sugerenciasProfesion); // actualiza las sugerencias deacuerdo a lo que se ingresa en el input
+      
+    } else {
+      setProfesionInput(null); //si el input esta vacio , oculta las sugerencias
+    }
+    setValorInputProfesion(profesionABuscar);
+  };
+
+  const hallarIdProfesion = (profesion) => {
+   
+    const profesionId = profesiones.find(
+      (em) => em.descripcion.toLowerCase() === profesion
+    );
+    console.log( profesionId.idProfesion)
+    return profesionId.idProfesion;
+  };
+
+  const clickAgregarAinputProfesion= (profesion) => {
+    setValorInputProfesion(profesion);
+    const idProfesion = hallarIdProfesion(profesion);
+    console.log(idProfesion)
+    setValue("profesion", idProfesion);
+    setProfesionInput(null);
+  };
   const changeSelectBrigadista = (e) => {
     setBrigadista(e.target.value);
   };
@@ -199,6 +250,11 @@ const ModalCreateUpdatePersonalSalud = ({
       const eess = isPersonalSaludToUpdate.PersonalSaludEstablecimiento.NombreEstablecimiento.toLowerCase()
       const idEstablecimiento = hallarIdEstablecimiento(eess);     
       data.idEstablecimiento = Number(idEstablecimiento)    
+
+      const profesion =
+      isPersonalSaludToUpdate.PersonalSaludProfesion.descripcion.toLowerCase();
+      const idProfesion = hallarIdProfesion(profesion);
+      data.profesion = idProfesion;
       actualizarPersonalSalud(data, reset);
     } else {
       crearPersonalSalud(data, reset);
@@ -208,6 +264,7 @@ const ModalCreateUpdatePersonalSalud = ({
   useEffect(() => {
     obtenerContratos();
     obtenerRedMicroredEeSs();
+    obtenerProfesiones()
   }, []);
   useEffect(() => {
     if (isPersonalSaludToUpdate) {
@@ -222,7 +279,7 @@ const ModalCreateUpdatePersonalSalud = ({
           correo: isPersonalSaludToUpdate.correo,
           celular: isPersonalSaludToUpdate.celular,
           direccionActual: isPersonalSaludToUpdate.direccionActual,
-          profesion: isPersonalSaludToUpdate.profesion,
+          profesion: isPersonalSaludToUpdate.PersonalSaludProfesion.descripcion,
           especialidad: isPersonalSaludToUpdate.especialidad,
           brigadista: isPersonalSaludToUpdate.brigadista,
           plataformaDefensa: isPersonalSaludToUpdate.plataformaDefensa,
@@ -379,15 +436,24 @@ const ModalCreateUpdatePersonalSalud = ({
                 {...register("direccionActual")}
               />
             </div>
-            <div className="flex gap-2 ">
+            <div className="flex gap-2 relative">
               {/* <label htmlFor="password">Micro red</label> */}
               <input
                 className="outline-none  bg-transparent border-b border-[#80CBC4] p-2 text-center placeholder:text-[#26A69A] text-[#26A69A] font-semibold"
                 name="profesion"
                 type="text"
                 placeholder="Profesion ..."
-                {...register("profesion")}
+                value={valorInputProfesion}
+                {...register("profesion", {
+                  onChange: (e) => onChangeProfesion(e),
+                })}
               />
+                {profesionInput && (
+                <SugerenciasProfesion
+                profesionInput={profesionInput}
+                clickAgregarAinputProfesion={clickAgregarAinputProfesion}
+                />
+              )}
             </div>
             <div className="flex gap-2 ">
               {/* <label htmlFor="first_name">Establecimiento</label> */}

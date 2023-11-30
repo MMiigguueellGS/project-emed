@@ -27,6 +27,8 @@ const AppPersonalSalud = () => {
   const [valorInputRed, setvalorInputRed] = useState(''); //guarda el valor del input de red
   const [valorInputMicroRed, setValorInputMicroRed] = useState('');
   const [valorInputEstablecimiento, setValorInputEstablecimiento] = useState('');
+
+  const [valorInputProfesion, setValorInputProfesion] = useState("")
   const handelCreatePersonalSalud = () => {
     setIsShowModal(true);
   };
@@ -48,6 +50,7 @@ const AppPersonalSalud = () => {
         setvalorInputRed('');
         setValorInputMicroRed('');
         setValorInputEstablecimiento('');
+        setValorInputProfesion("");
       })
       .catch((err) => console.log(err));
   };
@@ -115,6 +118,8 @@ const AppPersonalSalud = () => {
         setValorInputMicroRed={setValorInputMicroRed}
         valorInputEstablecimiento={valorInputEstablecimiento}
         setValorInputEstablecimiento={setValorInputEstablecimiento}
+        valorInputProfesion={valorInputProfesion}
+        setValorInputProfesion={setValorInputProfesion}
       />
       <PersonalSalud
         PersonalSalud={personalSalud ?? []}

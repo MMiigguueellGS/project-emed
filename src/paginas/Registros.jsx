@@ -9,7 +9,7 @@ const Registros = () => {
     <LinkModulo icono= {<i className='bx bx-male-female' ></i>} ruta={"/personalSalud"}>
     Gestion y registros del personal
     </LinkModulo>
-    <LinkModulo icono= {<i className='bx bx-store-alt' ></i>} ruta={"/"}>
+    <LinkModulo icono= {<i className='bx bx-store-alt' ></i>} ruta={"/bienes"}>
     Gestion y registros de Bienes
     </LinkModulo>
     <LinkModulo icono= {<i className='bx bxs-ambulance'></i>} ruta={"/eventos"}>

@@ -12,7 +12,7 @@ const ListaPersonalSalud = ({ PersonalSalud,eliminarPersonalSalud,handleActualiz
                         <td>{PersonalSalud.correo}</td>
                         <td>{PersonalSalud.celular}</td>
                         <td>{PersonalSalud.direccionActual}</td>
-                        <td>{PersonalSalud.profesion}</td>
+                        <td>{PersonalSalud.PersonalSaludProfesion.descripcion}</td>
                         <td>{PersonalSalud.especialidad}</td>
                         <td>{PersonalSalud.brigadista}</td>
                         <td>{PersonalSalud.plataformaDefensa}</td>

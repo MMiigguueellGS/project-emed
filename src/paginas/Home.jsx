@@ -6,9 +6,9 @@ const Home = () => {
   return (
     <section className="flex flex-wrap gap-4 justify-center items-center  mx-16 mt-16 mb-8">
       <h1 className="font-bold text-center text-3xl pt-4">
-        OFICINA DE GESTION DEL RIESGO DE DESASSTRES Y DEFENSA NACIONAL EN SALUD
+        OFICINA DE GESTION DEL RIESGO DE DESASTRES Y DEFENSA NACIONAL EN SALUD
       </h1>
-      <article  className="grid grid-cols-2 justify-center items-center gap-4 px-10">
+      <article  className="grid grid-cols-1 sm:grid-cols-2 justify-center items-center gap-4 px-10">
       <section className="grid gap-10 justify-center items-center pt-8 px-10">
       <div className="w-[520px]  hover:scale-110">
         <img className="" src="/img/equipo.jpeg" alt="" />
