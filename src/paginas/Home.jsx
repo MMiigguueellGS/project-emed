@@ -18,7 +18,7 @@ const Home = () => {
       </div>
       </section>
      <section className="grid gap-6">
-     <p className="text-justify ">
+     <p className="text-justify font-sans">
         Espacio de Monitoreo de Emergencias y Desastres - GERESA LA LIBERTAD
         Realizamos el monitoreo, seguimiento, procesamiento, consolidación y
         análisis de la información a través de documentos técnicos sobre
