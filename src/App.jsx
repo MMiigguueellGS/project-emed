@@ -27,19 +27,22 @@ function App() {
   return (
     <main className=" ">
       <section className="min-h-screen grid grid-rows-[1fr_auto]   bg-gradient-to-b from-[#43A49B]/80 via-[#cdfaf6]/80 to-[#43A49B]/90">
-        <nav className=" bg-gray-600 h-14 min-w-full fixed text-white">
-          <ul className="flex justify-center items-center   font-semibold text-xl">
-            <li className=" sm:w-40 w-24  from-[#43A49B] via-[#cdfaf6] to-[#43A49B] py-3 px-2 text-center mr-[1px] hover:text-[#cdfaf6] hover:bg-[#43A49B]">
+        <nav className=" flex justify-around items-center bg-gray-600  min-w-full fixed text-white">
+          <div className="w-38 text-sm py-[2px] "><img className="w-16 mx-auto"  src="/img/logo_emed.png" alt="" /><h2 className="text-center">Emergencias y Desastres - GRSL</h2></div>
+          <ul className="flex justify-center items-center  font-semibold text-xl ">
+            <li className="flex items-center justify-center sm:w-40 w-24  h-full from-[#43A49B] via-[#cdfaf6] to-[#43A49B]  px-2 text-center mr-[1px] hover:text-[#cdfaf6] hover:bg-[#43A49B]">
               <Link to="/">BIENVENIDOS</Link>
             </li>
-            <li className="sm:w-40 w-24 from-[#43A49B] via-[#cdfaf6] to-[#43A49B] py-3 px-2 text-center mr-[2px] hover:text-[#cdfaf6] hover:bg-[#43A49B]">
+            <li className=" flex items-center justify-center sm:w-40 w-24 h-full from-[#43A49B] via-[#cdfaf6] to-[#43A49B] px-2 text-center mr-[2px] hover:text-[#cdfaf6] hover:bg-[#43A49B]">
               <Link to="/registros">REGISTROS</Link>
             </li>
-            <li className="sm:w-40 w-24 from-[#43A49B] via-[#cdfaf6] to-[#43A49B] py-3 px-2 text-center hover:text-[#cdfaf6] hover:bg-[#43A49B]">
+            <li className="flex items-center justify-center sm:w-40 w-24 h-full  from-[#43A49B] via-[#cdfaf6] to-[#43A49B]  px-2 text-center hover:text-[#cdfaf6] hover:bg-[#43A49B]">
               <Link to="/reportes">REPORTES</Link>
             </li>
           </ul>
+          
         </nav>
+        
 
         <Routes>
           <Route path="/" element={<Home />} />

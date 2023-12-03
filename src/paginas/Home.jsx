@@ -4,10 +4,13 @@ import YoutubeVideo from "../utiles/YoutubeVideo";
 const Home = () => {
   const youtubeVideoUrl = 'https://www.youtube.com/watch?v=DhR5raMwFO0'
   return (
-    <section className="flex flex-wrap gap-4 justify-center items-center  mx-16 mt-16 mb-8">
-      <h1 className="font-bold text-center text-3xl pt-4">
+    <section className="flex flex-wrap gap-4 justify-center items-center  mx-16 mt-36 mb-8">
+     <article className="flex ">
+  
+      <h1 className="font-bold  text-3xl pt-4">
         OFICINA DE GESTION DEL RIESGO DE DESASTRES Y DEFENSA NACIONAL EN SALUD
       </h1>
+     </article>
       <article  className="grid grid-cols-1 sm:grid-cols-2 justify-center items-center gap-4 px-10">
       <section className="grid gap-10 justify-center items-center pt-8 px-10">
       <div className="w-[520px]  hover:scale-110">
@@ -18,6 +21,7 @@ const Home = () => {
       </div>
       </section>
      <section className="grid gap-6">
+     
      <p className="text-justify font-sans">
         Espacio de Monitoreo de Emergencias y Desastres - GERESA LA LIBERTAD
         Realizamos el monitoreo, seguimiento, procesamiento, consolidación y
