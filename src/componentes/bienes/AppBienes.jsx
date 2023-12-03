@@ -10,8 +10,7 @@ const vaciarFormulario = {
   nombreBien: "",
   estadoBien: "",
   descripcion: "",
-  idEmed: ""
-  
+  idEmed: "",
 };
 const AppBienes = () => {
   const [isShowModal, setIsShowModal] = useState(false); // is -> esta mostrando el modal si ò no
@@ -36,7 +35,7 @@ const AppBienes = () => {
       .then(({}) => {
         obtenerbienes();
         reset(vaciarFormulario);
-        setIsShowModal(false);       
+        setIsShowModal(false);
         setValorInputEmed("");
       })
       .catch((err) => console.log(err));
@@ -69,23 +68,28 @@ const AppBienes = () => {
   }, []);
 
   return (
-    <section className=" mx-auto mt-16  w-full bg-[#D0EBEA] ">
-      <h2 className="uppercase font-semibold text-4xl">Bienes</h2>
-      <section className=" flex justify-around">
-        <form className="grid gap-5 w-[min(100%,_350px)] sm:w-[300px] text-black">
-          <div className="ligthTheme p-4 rounded-md flex items-center gap-2  sm:w-[360px]">
-            <i className="bx bx-search-alt-2 text-white text-lg"></i>
+    <section className=" px-[70px] pt-10 mt-24   bg-slate-50">
+      <h2 className="uppercase font-semibold text-3xl text-gray-600 flex items-center gap-6">
+        <span className="text-6xl">
+        <i className='bx bx-store-alt' ></i>
+        </span>
+        Bienes
+      </h2>
+      <section className=" flex justify-end   pb-9 mr-8">
+        <form className="grid gap-5 w-[min(100%,_350px)] sm:w-[300px] text-black justify-center items-center ">
+          <div className=" p-2 rounded-md flex items-center gap-2  sm:w-[240px]  border-b-8 border-slate-300/40">
+            <i className="bx bx-search-alt-2 text-[#26A69A] text-lg"></i>
             <input
               id="countryName"
               className="outline-none flex-1 bg-white  placeholder:text-[#26A69A] text-[#26A69A] font-semibold"
-              placeholder="Ingresa el DNI..."
+              placeholder="Codigo del bien..."
               type="text"
               autoComplete="off"
             />
           </div>
         </form>
         <button onClick={handelCreatebienes} className="cursor-pointer ">
-          <div className=" grid first-letter:h-15 bg-[#43A49B] p-2 text-center">
+          <div className=" grid  bg-[#43A49B] p-2 text-center text-white  rounded-xl hover:bg-blue-400 text-sm">
             <i className="bx bx-plus-medical"></i>
             Nuevo
           </div>
@@ -102,11 +106,11 @@ const AppBienes = () => {
         setValorInputEmed={setValorInputEmed}
         valorInputEmed={valorInputEmed}
       />
-    <Bienes
-    bienes={bienes ?? []}
-    eliminarBien={eliminarBien}
-    handleActualizar={handleActualizar}
-  />
+      <Bienes
+        bienes={bienes ?? []}
+        eliminarBien={eliminarBien}
+        handleActualizar={handleActualizar}
+      />
     </section>
   );
 };

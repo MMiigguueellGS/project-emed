@@ -3,7 +3,7 @@ import React from 'react'
 const ListaPersonalSalud = ({ PersonalSalud,eliminarPersonalSalud,handleActualizar }) => {
   // const personal = PersonalSalud.map(persona=> per)
   return (
-    <tr className="grid grid-cols-[repeat(12,_1fr)] grid-rows-1 gap-2 justify-center items-center py-2 text-center hover:bg-slate-50 hover:text-[#3c958c] hover:font-semibold text-sm font-mono ">
+    <tr className="grid grid-cols-[repeat(12,_1fr)] grid-rows-1 gap-2 justify-center items-center p-2 text-center hover:bg-slate-50 hover:text-[#3c958c] hover:font-semibold text-sm font-mono ">
                         {/* <td>{PersonalSalud.microRed}</td>
       <td>{PersonalSalud.redSalud}</td>
                         <td>{PersonalSalud.idEstablecimiento}</td> */}
@@ -20,19 +20,19 @@ const ListaPersonalSalud = ({ PersonalSalud,eliminarPersonalSalud,handleActualiz
                         <td className='truncate tracking-wider'>{PersonalSalud.condicionContrato.descripcion.toUpperCase()}</td>
                         <td className='truncate tracking-wider'>{PersonalSalud.localidad?PersonalSalud.localidad.toUpperCase():""}</td>  
       
-      <td>
+      <td className='flex gap-2 justify-center'>
         <button
           variant="danger"
           size="sm"
           className="px-1 text-2xl text-red-500 hover:text-[#43A49B]"
           onClick={() => eliminarPersonalSalud(PersonalSalud.id)}
         >
-         <i class='bx bxs-trash'></i>
+         <i className='bx bxs-trash'></i>
         </button>
         <button variant="warning" size="sm" className='px-1 text-2xl text-blue-500 hover:text-orange-500'
          onClick={() => handleActualizar(PersonalSalud)}
          >
-         <i class='bx bxs-edit-alt' ></i>
+         <i className='bx bxs-edit-alt' ></i>
         </button>
       </td>
     </tr>

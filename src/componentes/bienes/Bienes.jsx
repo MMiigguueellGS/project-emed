@@ -3,17 +3,17 @@ import ListaBienes from './ListaBienes'
 
 const Bienes = ({bienes,eliminarBien,handleActualizar}) => {
   return (
-    <div className='grid justify-center'>
-    <table className='px-10'>
-              <thead>
-                  <tr className='grid grid-cols-[repeat(7,__1fr)] grid-rows-1 gap-4 justify-center items-center '>
-                      <th>Codigo Patrinomial</th>
-                      <th>Codigo Bien</th>
-                      <th>Nombre</th>
-                      <th>Estado</th>
-                      <th>descripcion</th>
-                      <th>Emed</th>
-                      <th>Accion</th>
+    <div className='w-full bg-green-400/50 shadow-lg shadow-indigo-500/40  '>
+   <table className='px-10 w-full'>
+                <thead className='bg-gray-600 text-white'>
+                    <tr className='grid grid-cols-[repeat(7,_1fr)] grid-rows-1 gap-2 justify-center items-center uppercase p-2'> 
+                      <th className='truncate'>Codigo Patrinomial</th>
+                      <th className='truncate'>Codigo Bien</th>
+                      <th className='truncate'>Nombre</th>
+                      <th className='truncate'>Estado</th>
+                      <th className='truncate'>descripcion</th>
+                      <th className='truncate'>Emed</th>
+                      <th className='truncate'>Accion</th>
                   </tr>
               </thead>
               <tbody>   

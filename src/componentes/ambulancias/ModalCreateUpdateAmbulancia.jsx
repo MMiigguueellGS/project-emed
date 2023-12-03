@@ -124,7 +124,7 @@ const ModalCreateUpdateAmbulancia = ({
 
   return (
     <section
-      className={`fixed bg-[#26A69A]/30 top-0 bottom-0 left-0 right-0 flex justify-center items-center transition-[opacity_transform] duration-300 ${
+      className={`fixed bg-black/40 top-0 bottom-0 left-0 right-0 flex justify-center items-center transition-[opacity_transform] duration-300 ${
         isShowModal
           ? "visible opacity-100 sclae-100"
           : "invisible opacity-0 scale-0"

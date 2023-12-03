@@ -6,9 +6,9 @@ const PersonalSalud = ({PersonalSalud,eliminarPersonalSalud,handleActualizar}) =
     <div className='grid justify-center items-center bg-green-400/50 shadow-lg shadow-indigo-500/40  '>
       
 
-      <table className='px-10 sm:[1600px]'>
+      <table className='px-10 '>
                 <thead className='bg-gray-600 text-white'>
-                    <tr className='grid grid-cols-[repeat(12,__1fr)] grid-rows-1 gap-2 justify-center items-center uppercase py-2'>                                           
+                    <tr className='grid grid-cols-[repeat(12,__1fr)] grid-rows-1 gap-2 justify-center items-center uppercase p-2'>                                           
                         {/* <th>redSalud</th>
                         <th>microRed</th>
                         <th>idEstablecimiento</th> */}
