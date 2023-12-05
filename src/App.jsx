@@ -1,16 +1,17 @@
-import { useState, useEffect } from "react";
-import "./App.css";
-import axios from "axios";
+import { useEffect } from "react";
 import { Link, Route, Routes } from "react-router-dom";
-import Home from "./paginas/Home";
+import "./App.css";
 import AppAmbulancias from "./componentes/ambulancias/AppAmbulancias";
-import AppPersonalSalud from "./componentes/personalSalud/AppPersonalSalud";
-import Registros from "./paginas/Registros";
-import AppEventos from "./componentes/eventos/AppEventos";
 import AppBienes from "./componentes/bienes/AppBienes";
-import Reportes from "./paginas/Reportes";
+import AppEventos from "./componentes/eventos/AppEventos";
 import PersonalBrigadistas from "./componentes/graficos/personalSalud/PersonalBrigadistas";
 import PersonalModalidad from "./componentes/graficos/personalSalud/PersonalModalidad";
+import ListaReportesPersonal from "./componentes/layout/ListaReportesPersonal";
+import AppPersonalSalud from "./componentes/personalSalud/AppPersonalSalud";
+import Home from "./paginas/Home";
+import Registros from "./paginas/Registros";
+import Reportes from "./paginas/Reportes";
+import ReportePersonal from "./reportes/personalSalud/ReportePersonal";
 
 function App() {
   useEffect(() => {
@@ -26,35 +27,49 @@ function App() {
 
   return (
     <main className="">
-      <section className="min-h-screen w-full grid grid-rows-[1fr_auto]   bg-gradient-to-b from-[#43A49B]/80 via-[#cdfaf6]/80 to-[#43A49B]/90">
-        <nav className=" flex justify-around items-center bg-gray-600  min-w-full fixed text-white">
-          <div className="w-38 text-sm py-[2px] "><img className="w-16 mx-auto"  src="/img/logo_emed.png" alt="" /><h2 className="text-center">Emergencias y Desastres - GRSL</h2></div>
-          <ul className="flex justify-center items-center  font-semibold text-xl ">
-            <li className="flex items-center justify-center sm:w-40 w-24  h-full from-[#43A49B] via-[#cdfaf6] to-[#43A49B]  px-2 text-center mr-[1px]  hover:text-emerald-300 hover:border-b-2 hover:border-white">
+      <section className="min-h-screen w-full grid grid-rows-[1fr_auto]   bg-slate-50">
+        <nav className=" flex justify-around items-center bg-gray-600  min-w-full fixed text-white border-b-8 border-[#51c1b5]">
+          <div className="w-38 text-sm py-[2px] ">
+            <img className="w-16 mx-auto" src="/img/logo_emed.png" alt="" />
+            <h2 className="text-center">Emergencias y Desastres - GRSL</h2>
+          </div>
+          <ul className="flex justify-center items-center  font-semibold text-lg ">
+            <li className="flex items-center justify-center sm:w-40 w-24  h-full from-[#43A49B] via-[#cdfaf6] to-[#43A49B]  px-2 text-center mr-[1px]  hover:text-emerald-300 hover:border-b-2 hover:border-white hover:text-xl">
               <Link to="/">BIENVENIDOS</Link>
             </li>
-            <li className=" flex items-center justify-center sm:w-40 w-24 h-full from-[#43A49B] via-[#cdfaf6] to-[#43A49B] px-2 text-center mr-[2px] hover:text-emerald-300 hover:border-b-2 hover:border-white">
+            <li className=" flex items-center justify-center sm:w-40 w-24 h-full from-[#43A49B] via-[#cdfaf6] to-[#43A49B] px-2 text-center mr-[2px] hover:text-emerald-300 hover:border-b-2 hover:border-white hover:text-xl">
               <Link to="/registros">REGISTROS</Link>
             </li>
-            <li className="flex items-center justify-center sm:w-40 w-24 h-full  from-[#43A49B] via-[#cdfaf6] to-[#43A49B]  px-2 text-center hover:text-emerald-300 hover:border-b-2 hover:border-white">
-              <Link to="/reportes">REPORTES</Link>
+            <li className="flex items-center justify-center sm:w-40 w-24 h-full  from-[#43A49B] via-[#cdfaf6] to-[#43A49B]  px-2 text-center hover:text-emerald-300 hover:border-b-2 hover:border-white hover:text-xl">
+              <Link to="/reportes/">REPORTES</Link>
             </li>
           </ul>
-          
         </nav>
-        
 
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/registros" element={<Registros />} />
+          <Route path="/reportes/" element={<Reportes />} />
 
-          <Route path="/reportes/*" >
-    {/* Rutas anidadas dentro de /reportes */}
-    <Route index element={<Reportes />} /> Componente por defecto
-    <Route path="personalBrigadistas" element={<PersonalBrigadistas />} />
-    <Route path="PersonalModalidad" element={<PersonalModalidad />} />
-    {/* Agrega más rutas anidadas según sea necesario */}
-  </Route>
+          <Route path="/reportesPersonal/" element={<ReportePersonal />}>
+            <Route path="personalBrigadistas"   element={<PersonalBrigadistas />}/>
+            <Route path="personalModalidad" element={<PersonalModalidad />} />
+          </Route>
+
+          <Route path="/reportesAmbulancias" element={<ListaReportesPersonal />} />
+
+          <Route path="/reportesBienes" element={<ListaReportesPersonal />} />
+
+          {/*           
+            <Route
+              path="personalBrigadistas"
+              element={<PersonalBrigadistas />}
+            />
+            <Route
+              path="personalModalidad"
+              element={<PersonalModalidad />}
+            />
+         */}
 
           <Route path="/ambulancias" element={<AppAmbulancias />} />
           <Route path="/personalSalud" element={<AppPersonalSalud />} />

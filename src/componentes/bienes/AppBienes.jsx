@@ -75,7 +75,7 @@ const AppBienes = () => {
         </span>
         Bienes
       </h2>
-      <section className=" flex justify-end   pb-9 mr-8">
+      <section className=" flex justify-end   pb-9 pt-4 mr-8">
         <form className="grid gap-5 w-[min(100%,_350px)] sm:w-[300px] text-black justify-center items-center ">
           <div className=" p-2 rounded-md flex items-center gap-2  sm:w-[240px]  border-b-8 border-slate-300/40">
             <i className="bx bx-search-alt-2 text-[#26A69A] text-lg"></i>

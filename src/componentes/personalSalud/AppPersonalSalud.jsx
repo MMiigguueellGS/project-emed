@@ -84,7 +84,7 @@ const AppPersonalSalud = () => {
   return (
     <section className=" px-[70px] pt-10 mt-24  w-full bg-slate-50">
       <h2 className="uppercase font-semibold text-3xl text-gray-600 flex items-center gap-6"><span className="text-6xl"><i className='bx bx-male-female' ></i></span>Personal de Salud</h2>
-      <section className=" flex justify-end   pb-9 mr-8">
+      <section className=" flex justify-end   pb-9 pt-4 mr-8">
         <form className="grid gap-5 w-[min(100%,_350px)] sm:w-[300px] text-black justify-center items-center ">
           <div className=" p-2 rounded-md flex items-center gap-2  sm:w-[240px]  border-b-8 border-slate-300/40">
             <i className="bx bx-search-alt-2 text-[#26A69A] text-lg"></i>
