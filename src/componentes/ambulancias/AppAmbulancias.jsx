@@ -20,12 +20,12 @@ const AppAmbulancias = () => {
   const [isShowModal, setIsShowModal] = useState(false); // is -> esta mostrando el modal si ò no
   const [ambulancias, setAmbulancias] = useState([]);
   const [isAmbulanciaToUpdate, setIsAmbulanciaToUpdate] = useState(null); // permite saber si hay informacion o no para editar
-
+  const [nPlacaSearch, setNPlacaSearch] = useState("")
   const handelCreateAmbulancia = () => {
     setIsShowModal(true);
   };
-  const obtenerAmbulancias = () => {
-    const url = "http://localhost:8080/ambulancias";
+  const obtenerAmbulancias = (placa) => {
+    const url = `http://localhost:8080/ambulancias?nPlaca=${placa}`;
     axios
       .get(url)
       .then(({ data }) => setAmbulancias(data))
@@ -66,8 +66,13 @@ const AppAmbulancias = () => {
     setIsShowModal(true);
     setIsAmbulanciaToUpdate(ambulancia);
   };
+  const handleOnchangePlaca = (e)=>{
+    const placa = e.target.value 
+    obtenerAmbulancias(placa)
+    setNPlacaSearch(placa)
+  }
   useEffect(() => {
-    obtenerAmbulancias();
+    obtenerAmbulancias("");
   }, []);
 
   return (
@@ -79,11 +84,13 @@ const AppAmbulancias = () => {
           
             <i className="bx bx-search-alt-2 text-[#26A69A] text-lg"></i>
             <input
+            onChange={handleOnchangePlaca}
               id="countryName"
               className="outline-none flex-1 bg-white placeholder:text-[#26A69A] text-[#26A69A] font-semibold"
               placeholder="Ingresa la placa..."
               type="text"
               autoComplete="off"
+              value={nPlacaSearch}
             />
           </div>
         </form>

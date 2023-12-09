@@ -5,7 +5,10 @@ import {
   BarChart,
   CartesianGrid,
   Cell,
+  Pie,
+  PieChart,
   ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
@@ -36,18 +39,55 @@ const PersonalBrigadistas = () => {
     const { fill, x, y, width, height } = props;
     return <path d={getPath(x, y, width, height)} stroke="none" fill={fill} />;
   };
+  const obtenerDatosParaGrafico = (datos) => {
+ 
+    const datosParaGrafico = datos.map((ele) => ({
+      name: ele.brigadista,
+      value: parseInt(ele.numBrigadista, 10),
+    }));
+   
+    return datosParaGrafico;
+  };
+
+  const RADIAN = Math.PI / 180;
+  const renderCustomizedLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
+    index,
+  }) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="white"
+        textAnchor={x > cx ? "start" : "end"}
+        dominantBaseline="central"
+      >
+        {`${(percent * 100).toFixed(0)}%`}
+      </text>
+    );
+  };
 
   useEffect(() => {
     obtenerData();
   }, []);
 
   return (
-    <section className="col-span-3 ml-10 mt-6">
-      <section className="rounded-lg shadow-xl shadow-blue-500/60 w-[450px] h-[500px] hover:scale-110">
-        <h2 className="text-center text-gray-800 font-light text-2xl">
+    <section className="col-span-3 ml-14 mt-14">
+      <section className="grid  rounded-lg ">
+        <h2 className=" bg-gradient-to-b from-green-400/80 text-center text-blue-800 font-light text-2xl p-4 rounded-t-xl">
           Reporte Numero de Brigadistas
         </h2>
-        <ResponsiveContainer width={450} aspect={1}>
+       <section className="grid grid-cols-1 md:grid-cols-2  mx-auto gap-16">
+       <ResponsiveContainer width={470} aspect={1} className=" shadow-xl shadow-blue-500/60 hover:scale-110  flex justify-center items-center">
           <BarChart
             data={numBrigadista}
             width={100}
@@ -71,6 +111,35 @@ const PersonalBrigadistas = () => {
             </Bar>
           </BarChart>
         </ResponsiveContainer>
+        <ResponsiveContainer width={470} aspect={1} className=" shadow-xl shadow-blue-500/60 hover:scale-110 flex items-center justify-center">
+          {numBrigadista && (
+            <div>
+              <PieChart width={400} height={400}>
+                <Pie
+                  data={obtenerDatosParaGrafico(numBrigadista)}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={renderCustomizedLabel}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value" //personasModalidad.cantidad
+                  outerRadius={165}
+                  innerRadius={60}
+                >
+                  {numBrigadista.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={colors[index % colors.length]}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </div>
+          )}
+        </ResponsiveContainer>
+       </section>
       </section>
     </section>
   );

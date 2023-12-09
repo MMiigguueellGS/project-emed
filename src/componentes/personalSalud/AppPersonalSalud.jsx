@@ -29,14 +29,15 @@ const AppPersonalSalud = () => {
   const [valorInputEstablecimiento, setValorInputEstablecimiento] = useState('');
 
   const [valorInputProfesion, setValorInputProfesion] = useState("")
+  const [dniSearch, setDniSearch] = useState("")
   const handelCreatePersonalSalud = () => {
     setIsShowModal(true);
   };
-  const obtenerPersonalSalud = () => {
-    const url = "http://localhost:8080/personalSalud";
+  const obtenerPersonalSalud = (dni) => {
+    const url = `http://localhost:8080/personalSalud?dni=${dni}`;
     axios
-      .get(url)
-      .then(({ data }) => setPersonalSalud(data))
+      .get(url,dni)
+      .then(({ data }) =>  setPersonalSalud(data))
       .catch((err) => console.log(err));
   };
   const crearPersonalSalud = (newPersonalSalud, reset) => {
@@ -77,8 +78,15 @@ const AppPersonalSalud = () => {
     setIsShowModal(true);
     setIsPersonalSaludToUpdate(PersonalSalud);
   };
+
+  const handleOnchangeDNI = (e)=>{
+    const dni = e.target.value 
+    obtenerPersonalSalud(dni)
+    setDniSearch(dni)
+
+  }
   useEffect(() => {
-    obtenerPersonalSalud();
+    obtenerPersonalSalud("");
   }, []);
 // 
   return (
@@ -89,11 +97,13 @@ const AppPersonalSalud = () => {
           <div className=" p-2 rounded-md flex items-center gap-2  sm:w-[240px]  border-b-8 border-slate-300/40">
             <i className="bx bx-search-alt-2 text-[#26A69A] text-lg"></i>
             <input
+            onChange={handleOnchangeDNI}
               id="countryName"
               className="outline-none flex-1 bg-slate-50  placeholder:text-[#26A69A] text-[#26A69A] font-semibold"
               placeholder="Ingresa el DNI..."
               type="text"
               autoComplete="off"
+              value={dniSearch}
             />
           </div>
         </form>

@@ -17,12 +17,12 @@ const AppBienes = () => {
   const [bienes, setBienes] = useState([]);
   const [isBienToUpdate, setIsBienToUpdate] = useState(null); // permite saber si hay informacion o no para editar
   const [valorInputEmed, setValorInputEmed] = useState(""); //guarda el valor del input de red
-
+  const [bienSearch, setBienSearch] = useState("")
   const handelCreatebienes = () => {
     setIsShowModal(true);
   };
-  const obtenerbienes = () => {
-    const url = "http://localhost:8080/bienes";
+  const obtenerbienes = (codigoB) => {
+    const url = `http://localhost:8080/bienes?codigoBien=${codigoB}`;
     axios
       .get(url)
       .then(({ data }) => setBienes(data))
@@ -63,8 +63,14 @@ const AppBienes = () => {
     setIsShowModal(true);
     setIsBienToUpdate(bienes);
   };
+  const handleOnchangeSearch = (e)=>{
+    const valorABuscar = e.target.value 
+    obtenerbienes(valorABuscar)
+    setBienSearch(valorABuscar)
+
+  }
   useEffect(() => {
-    obtenerbienes();
+    obtenerbienes('');
   }, []);
 
   return (
@@ -80,11 +86,13 @@ const AppBienes = () => {
           <div className=" p-2 rounded-md flex items-center gap-2  sm:w-[240px]  border-b-8 border-slate-300/40">
             <i className="bx bx-search-alt-2 text-[#26A69A] text-lg"></i>
             <input
+            onChange={handleOnchangeSearch}
               id="countryName"
               className="outline-none flex-1 bg-white  placeholder:text-[#26A69A] text-[#26A69A] font-semibold"
               placeholder="Codigo del bien..."
               type="text"
               autoComplete="off"
+              value={bienSearch}
             />
           </div>
         </form>
