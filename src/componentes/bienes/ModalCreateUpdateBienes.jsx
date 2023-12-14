@@ -2,22 +2,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import SugerenciasEmed from "../layout/SugerenciasEmed";
-
 const ModalCreateUpdateBienes = ({
-  setIsShowModal,
-  isShowModal,
-  setIsBienToUpdate,
-  isBienToUpdate,
-  crearBien,
-  actualizarBien,
-  vaciarFormulario,
-  valorInputEmed,
-  setValorInputEmed,
+  setIsShowModal,  isShowModal,  setIsBienToUpdate,  isBienToUpdate,  crearBien,
+  actualizarBien,  vaciarFormulario,  valorInputEmed,  setValorInputEmed,
 }) => {
-  // const {handleSubmit, register, reset, formState:{errors}} = useForm();
-  //RED
-  
-  const [emedInput, setEmedInput] = useState(null); // ESTABLECIMIENTOS con su red , microred
+  const [emedInput, setEmedInput] = useState(null); 
   const { handleSubmit, register, reset, setValue } = useForm();
   const [emeds, setEmeds] = useState([]);
   const obtenerEmeds = () => {
@@ -62,7 +51,6 @@ const ModalCreateUpdateBienes = ({
     setValue("idEmed", idEmed);
     setEmedInput(null);
   };
-  // dispara el modal setIsShowModal = true se mostrara
   const handleClickCloseModal = () => {
     setIsShowModal(false);
     setIsBienToUpdate(null);

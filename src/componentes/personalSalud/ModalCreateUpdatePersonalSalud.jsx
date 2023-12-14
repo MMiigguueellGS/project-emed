@@ -6,46 +6,33 @@ import SugerenciaRed from "../layout/SugerenciaRed";
 import SugerenciaMicroRed from "../layout/SugerenciaMicroRed";
 import SugerenciaEstablecimiento from "../layout/SugerenciaEstablecimiento";
 import SugerenciasProfesion from "../layout/SugerenciasProfesion";
-
+const ls = localStorage
 const ModalCreateUpdatePersonalSalud = ({
-  setIsShowModal,
-  isShowModal,
-  setIsPersonalSaludToUpdate,
-  isPersonalSaludToUpdate,
-  crearPersonalSalud,
-  actualizarPersonalSalud,
-  vaciarFormulario,
-  valorInputRed,
-  setvalorInputRed,
-  valorInputMicroRed,
-  setValorInputMicroRed,
-  valorInputEstablecimiento,
-  setValorInputEstablecimiento,
-  valorInputProfesion,
-  setValorInputProfesion,
+  setIsShowModal,  isShowModal,  setIsPersonalSaludToUpdate,  isPersonalSaludToUpdate,  crearPersonalSalud,
+  actualizarPersonalSalud,  vaciarFormulario,  valorInputRed,  setvalorInputRed,  valorInputMicroRed,  setValorInputMicroRed,
+  valorInputEstablecimiento,  setValorInputEstablecimiento,  valorInputProfesion,  setValorInputProfesion,
 }) => {
-  // const {handleSubmit, register, reset, formState:{errors}} = useForm();
-  //RED
+ 
   const [isRed, setIsRed] = useState(null); // contiene todas las redes y sus codigos
   const [redInput, setRedInput] = useState([]); //solo tiene los nombres de las redes y se usa para las sugerencias
-
   const [isMicroRed, setIsMicroRed] = useState(null);
   const [microRedInput, setMicroRedInput] = useState(null);
-
   const [isEstablecimiento, setIsEstablecimiento] = useState(null);
   const [establecimientoInput, setEstablecimientoInput] = useState(null); // ESTABLECIMIENTOS con su red , microred
-
   const { handleSubmit, register, reset, setValue } = useForm();
   const [contratos, setContratos] = useState([]);
   const [brigadista, setBrigadista] = useState("");
-
   const [profesionInput, setProfesionInput] = useState(null)
   const [profesiones, setProfesiones] = useState([]);
 
+  const token = ls.getItem("token")
+  const headers = {
+    'Authorization': `Bearer ${token}` // Agregar el token en el header 'Authorization'
+  }
   const obtenerRedMicroredEeSs = () => {
     const url = "http://localhost:8080/establecimientos";
     axios
-      .get(url)
+      .get(url,{headers})
       .then(({ data }) => {
         // obtento los establecimientos con sus redes y micrordes
         const dataps = data.map((elem) => ({
@@ -119,13 +106,11 @@ const ModalCreateUpdatePersonalSalud = ({
     }
     setvalorInputRed(redABuscar);
   };
-
   const clickAgregarAinputRed = (red) => {
     setvalorInputRed(red);
     setValue("redSalud", red);
     setRedInput(null);
   };
-
   const changeMicroRed = (e) => {
     const microRedABuscar = e.target.value;
     if (microRedABuscar !== "") {
@@ -144,7 +129,6 @@ const ModalCreateUpdatePersonalSalud = ({
     }
     setValorInputMicroRed(microRedABuscar);
   };
-
   const clickAgregarAinputMr = (mr) => {
     setValorInputMicroRed(mr);
     setValue("microRed", mr);
@@ -187,9 +171,8 @@ const ModalCreateUpdatePersonalSalud = ({
       .then(({ data }) => setProfesiones(data))
       .catch((err) => console.log(err));
   };
-
   const onChangeProfesion = (e) => {
-    const profesionABuscar = e.target.value;
+    const profesionABuscar = e.target.value.toLowerCase();
     if (profesionABuscar !== "") {
       const nombresProfesiones = profesiones
         .filter((profesion) =>
@@ -207,8 +190,8 @@ const ModalCreateUpdatePersonalSalud = ({
       setProfesionInput(null); //si el input esta vacio , oculta las sugerencias
     }
     setValorInputProfesion(profesionABuscar);
+   
   };
-
   const hallarIdProfesion = (profesion) => {
    
     const profesionId = profesiones.find(
@@ -217,14 +200,10 @@ const ModalCreateUpdatePersonalSalud = ({
     console.log( profesionId.idProfesion)
     return profesionId.idProfesion;
   };
-
   const clickAgregarAinputProfesion= (profesion) => {
     setValorInputProfesion(profesion);
-    const idProfesion = hallarIdProfesion(profesion);
-    console.log(idProfesion)
-    setValue("profesion", idProfesion);
-    setProfesionInput(null);
-  };
+    setProfesionInput(null)
+    };
   const changeSelectBrigadista = (e) => {
     setBrigadista(e.target.value);
   };
@@ -246,6 +225,8 @@ const ModalCreateUpdatePersonalSalud = ({
     setRedInput(null);
   };
   const submit = (data) => {
+    console.log(data)   ;
+
     if (isPersonalSaludToUpdate) {
       const eess = isPersonalSaludToUpdate.PersonalSaludEstablecimiento.NombreEstablecimiento.toLowerCase()
       const idEstablecimiento = hallarIdEstablecimiento(eess);     
@@ -257,7 +238,13 @@ const ModalCreateUpdatePersonalSalud = ({
       data.profesion = idProfesion;
       actualizarPersonalSalud(data, reset);
     } else {
+      const idProfesion = hallarIdProfesion(valorInputProfesion);
+    console.log(idProfesion)
+    console.log(valorInputProfesion)
+    // setValue("profesion", idProfesion);
+    data.profesion = idProfesion;
       crearPersonalSalud(data, reset);
+      setValorInputProfesion('')
     }
   };
 
@@ -272,14 +259,14 @@ const ModalCreateUpdatePersonalSalud = ({
         
           redSalud: isPersonalSaludToUpdate.redSalud,
           microRed: isPersonalSaludToUpdate.microRed,
-          idEstablecimiento: isPersonalSaludToUpdate.PersonalSaludEstablecimiento.NombreEstablecimiento,
+          idEstablecimiento: isPersonalSaludToUpdate.PersonalSaludEstablecimiento.NombreEstablecimiento.toLowerCase(),
           dni: isPersonalSaludToUpdate.dni,
           nombres: isPersonalSaludToUpdate.nombres,
           apellidos: isPersonalSaludToUpdate.apellidos,
           correo: isPersonalSaludToUpdate.correo,
           celular: isPersonalSaludToUpdate.celular,
           direccionActual: isPersonalSaludToUpdate.direccionActual,
-          profesion: isPersonalSaludToUpdate.PersonalSaludProfesion.descripcion,
+          profesion: isPersonalSaludToUpdate.PersonalSaludProfesion.descripcion.toLowerCase(),
           especialidad: isPersonalSaludToUpdate.especialidad,
           brigadista: isPersonalSaludToUpdate.brigadista,
           plataformaDefensa: isPersonalSaludToUpdate.plataformaDefensa,

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import axios from "axios";
 import ModalCreateUpdatePersonalSalud from "./ModalCreateUpdatePersonalSalud";
 import PersonalSalud from "./PersonalSalud";
@@ -20,32 +19,37 @@ const vaciarFormulario = {
   idCondicion: "",
   localidad: "",
 };
-const AppPersonalSalud = () => {
+const ls = localStorage
+const AppPersonalSalud = ({setIsLogin}) => {
   const [isShowModal, setIsShowModal] = useState(false); // is -> esta mostrando el modal si ò no
   const [personalSalud, setPersonalSalud] = useState([]);
   const [isPersonalSaludToUpdate, setIsPersonalSaludToUpdate] = useState(null); // permite saber si hay informacion o no para editar
   const [valorInputRed, setvalorInputRed] = useState(''); //guarda el valor del input de red
   const [valorInputMicroRed, setValorInputMicroRed] = useState('');
   const [valorInputEstablecimiento, setValorInputEstablecimiento] = useState('');
-
   const [valorInputProfesion, setValorInputProfesion] = useState("")
   const [dniSearch, setDniSearch] = useState("")
+  const token = ls.getItem("token")
+  const headers = {
+    'Authorization': `Bearer ${token}` // Agregar el token en el header 'Authorization'
+  }
   const handelCreatePersonalSalud = () => {
     setIsShowModal(true);
   };
   const obtenerPersonalSalud = (dni) => {
+
     const url = `http://localhost:8080/personalSalud?dni=${dni}`;
     axios
-      .get(url,dni)
+      .get(url,{headers})
       .then(({ data }) =>  setPersonalSalud(data))
       .catch((err) => console.log(err));
   };
   const crearPersonalSalud = (newPersonalSalud, reset) => {
     const url = "http://localhost:8080/personalSalud";
     axios
-      .post(url, newPersonalSalud)
+      .post(url, newPersonalSalud,{headers})
       .then(({}) => {
-        obtenerPersonalSalud();
+        obtenerPersonalSalud("");
         reset(vaciarFormulario);
         setIsShowModal(false);
         setvalorInputRed('');
@@ -59,7 +63,7 @@ const AppPersonalSalud = () => {
     const url = "http://localhost:8080/personalSalud";
     axios
       .delete(url + `/${id}`)
-      .then(() => obtenerPersonalSalud())
+      .then(() => obtenerPersonalSalud(""))
       .catch((err) => console.log(err));
   };
   const actualizarPersonalSalud = (PersonalSalud, reset) => {
@@ -67,7 +71,7 @@ const AppPersonalSalud = () => {
     axios
       .put(url + `/${isPersonalSaludToUpdate.id}`, PersonalSalud)
       .then(({}) => {        
-        obtenerPersonalSalud();
+        obtenerPersonalSalud("");
         reset(vaciarFormulario);
         setIsShowModal(false);
         setIsPersonalSaludToUpdate(null);
@@ -87,6 +91,10 @@ const AppPersonalSalud = () => {
   }
   useEffect(() => {
     obtenerPersonalSalud("");
+
+      const token = ls.getItem('token');
+      if(!token) {navigate("/auth/login")}else{setIsLogin(true)}
+   
   }, []);
 // 
   return (

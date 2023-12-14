@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-
 import axios from "axios";
-
 import Bienes from "./Bienes";
 import ModalCreateUpdateBienes from "./ModalCreateUpdateBienes";
 const vaciarFormulario = {
@@ -13,10 +11,10 @@ const vaciarFormulario = {
   idEmed: "",
 };
 const AppBienes = () => {
-  const [isShowModal, setIsShowModal] = useState(false); // is -> esta mostrando el modal si ò no
+  const [isShowModal, setIsShowModal] = useState(false); 
   const [bienes, setBienes] = useState([]);
   const [isBienToUpdate, setIsBienToUpdate] = useState(null); // permite saber si hay informacion o no para editar
-  const [valorInputEmed, setValorInputEmed] = useState(""); //guarda el valor del input de red
+  const [valorInputEmed, setValorInputEmed] = useState(""); 
   const [bienSearch, setBienSearch] = useState("")
   const handelCreatebienes = () => {
     setIsShowModal(true);
@@ -33,7 +31,7 @@ const AppBienes = () => {
     axios
       .post(url, newbienes)
       .then(({}) => {
-        obtenerbienes();
+        obtenerbienes('');
         reset(vaciarFormulario);
         setIsShowModal(false);
         setValorInputEmed("");
@@ -44,7 +42,7 @@ const AppBienes = () => {
     const url = "http://localhost:8080/bienes";
     axios
       .delete(url + `/${id}`)
-      .then(() => obtenerbienes())
+      .then(() => obtenerbienes(''))
       .catch((err) => console.log(err));
   };
   const actualizarBien = (bienes, reset) => {
@@ -52,7 +50,7 @@ const AppBienes = () => {
     axios
       .put(url + `/${isBienToUpdate.id}`, bienes)
       .then(({}) => {
-        obtenerbienes();
+        obtenerbienes('');
         reset(vaciarFormulario);
         setIsShowModal(false);
         setIsBienToUpdate(null);
@@ -63,6 +61,7 @@ const AppBienes = () => {
     setIsShowModal(true);
     setIsBienToUpdate(bienes);
   };
+  //Buscar por codigo de bien
   const handleOnchangeSearch = (e)=>{
     const valorABuscar = e.target.value 
     obtenerbienes(valorABuscar)

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import axios from "axios";
 import Ambulancias from "./Ambulancias";
 import ModalCreateUpdateAmbulancia from "./ModalCreateUpdateAmbulancia";
@@ -17,10 +16,10 @@ const vaciarFormulario = {
   revicionTecnica: false,
 };
 const AppAmbulancias = () => {
-  const [isShowModal, setIsShowModal] = useState(false); // is -> esta mostrando el modal si ò no
+  const [isShowModal, setIsShowModal] = useState(false); 
   const [ambulancias, setAmbulancias] = useState([]);
   const [isAmbulanciaToUpdate, setIsAmbulanciaToUpdate] = useState(null); // permite saber si hay informacion o no para editar
-  const [nPlacaSearch, setNPlacaSearch] = useState("")
+  const [nPlacaSearch, setNPlacaSearch] = useState("");
   const handelCreateAmbulancia = () => {
     setIsShowModal(true);
   };
@@ -57,34 +56,37 @@ const AppAmbulancias = () => {
         obtenerAmbulancias();
         reset(vaciarFormulario);
         setIsShowModal(false);
-        setIsAmbulanciaToUpdate(null)
+        setIsAmbulanciaToUpdate(null);
       })
       .catch((err) => console.log(err));
   };
   const handleActualizar = (ambulancia) => {
-   
     setIsShowModal(true);
     setIsAmbulanciaToUpdate(ambulancia);
   };
-  const handleOnchangePlaca = (e)=>{
-    const placa = e.target.value 
-    obtenerAmbulancias(placa)
-    setNPlacaSearch(placa)
-  }
+  const handleOnchangePlaca = (e) => {
+    const placa = e.target.value;
+    obtenerAmbulancias(placa);
+    setNPlacaSearch(placa);
+  };
   useEffect(() => {
     obtenerAmbulancias("");
   }, []);
 
   return (
     <section className=" px-[70px] pt-10 mt-24  bg-slate-50">
-       <h2 className="uppercase font-semibold text-3xl text-gray-600 flex items-center gap-6"><span className="text-6xl"><i className='bx bxs-ambulance'></i></span>Ambulancias</h2>
-       <section className=" flex justify-end   pb-9 pt-4 mr-8">
+      <h2 className="uppercase font-semibold text-3xl text-gray-600 flex items-center gap-6">
+        <span className="text-6xl">
+          <i className="bx bxs-ambulance"></i>
+        </span>
+        Ambulancias
+      </h2>
+      <section className=" flex justify-end   pb-9 pt-4 mr-8">
         <form className="grid gap-5 w-[min(100%,_350px)] sm:w-[300px] text-black justify-center items-center ">
           <div className=" p-2 rounded-md flex items-center gap-2  sm:w-[240px]  border-b-8 border-slate-300/40">
-          
             <i className="bx bx-search-alt-2 text-[#26A69A] text-lg"></i>
             <input
-            onChange={handleOnchangePlaca}
+              onChange={handleOnchangePlaca}
               id="countryName"
               className="outline-none flex-1 bg-white placeholder:text-[#26A69A] text-[#26A69A] font-semibold"
               placeholder="Ingresa la placa..."

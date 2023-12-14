@@ -1,6 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 const PersonalModalidad = () => {
   const [personasModalidad, setPersonasModalidad] = useState(null);
 
@@ -53,37 +65,73 @@ const PersonalModalidad = () => {
 
   return (
     <section className="col-span-3 ml-10 mt-6">
-      <div className=" shadow-xl shadow-blue-500/60 w-[450px] h-[500px] hover:scale-110">
-        <h2 className="text-center text-gray-800 font-light text-2xl">
+      <section className="grid  rounded-lg">
+        <h2 className=" bg-gradient-to-b from-green-400/80 text-center text-blue-800 font-light text-2xl p-4 rounded-t-xl">
           Reporte Modalidad de contrato
         </h2>
         {personasModalidad && (
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart width={400} height={400}>
-              <Pie
+          <section className="grid grid-cols-1 md:grid-cols-2  mx-auto gap-16">
+            <ResponsiveContainer
+              width={470}
+              aspect={1}
+              className=" shadow-xl shadow-blue-500/60 hover:scale-110  flex justify-center items-center"
+            >
+              <PieChart width={400} height={400}>
+                <Pie
+                  data={obtenerDatosParaGrafico(personasModalidad)}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={renderCustomizedLabel}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value" //personasModalidad.cantidad
+                  outerRadius={165}
+                  innerRadius={60}
+                >
+                  {personasModalidad.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+            <ResponsiveContainer
+              width={470}
+              aspect={1}
+              className=" shadow-xl shadow-blue-500/60 hover:scale-110 flex items-center justify-center"
+            >
+              <BarChart
+                width={500}
+                height={300}
                 data={obtenerDatosParaGrafico(personasModalidad)}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={renderCustomizedLabel}
-                outerRadius={80}
-                fill="#8884d8"
-                dataKey="value" //personasModalidad.cantidad
-                outerRadius={165}
-                innerRadius={60}
+                margin={{
+                  top: 50,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
               >
-                {personasModalidad.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
+                <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
+                <Tooltip />
+                <Bar yAxisId="left" dataKey="value" fill="#8884d8">
+                  {personasModalidad &&
+                    personasModalidad.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % 20]} />
+                    ))}
+                </Bar>
+                {/* <Bar yAxisId="right" dataKey="uv" fill="#82ca9d" /> */}
+              </BarChart>
+            </ResponsiveContainer>
+          </section>
         )}
-      </div>
+      </section>
     </section>
   );
 };

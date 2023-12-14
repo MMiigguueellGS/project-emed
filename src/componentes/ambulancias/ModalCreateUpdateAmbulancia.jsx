@@ -12,14 +12,12 @@ const ModalCreateUpdateAmbulancia = ({
   actualizarAmbulancia,
   vaciarFormulario
 }) => {
-  // const {handleSubmit, register, reset, formState:{errors}} = useForm();
   const [isRed, setIsRed] = useState(null);
   const [isMicroRed, setIsMicroRed] = useState([]);
   const [isEstablecimiento, setIsEstablecimiento] = useState([]);
   const [redMrEeSs, setRedMrEeSs] = useState(null);
   const [codiRed, setCodiRed] = useState("");
   const { handleSubmit, register, reset, setValue } = useForm();
-
   const obtenerRedMicroredEeSs = () => {
     const url = "http://localhost:8080/establecimientos";
     axios
@@ -58,7 +56,6 @@ const ModalCreateUpdateAmbulancia = ({
       })
       .catch((err) => console.log(err));
   };
-
   const changeSelectRed = (e) => {
     setCodiRed(e.target.value); //Actualiza el estado del codigo de la red
     console.log(e.target.value);
@@ -88,7 +85,6 @@ const ModalCreateUpdateAmbulancia = ({
     setIsMicroRed(microRed);
     setValue("redSalud", e.target.value);
   };
-
   const changeSelectMicroRed = (e) => {
     const establecimientos = redMrEeSs.filter(
       (elem) => elem.red === codiRed && elem.microRed === e.target.value
@@ -96,7 +92,6 @@ const ModalCreateUpdateAmbulancia = ({
     setIsEstablecimiento(establecimientos);
     setValue("microRed", e.target.value);
   };
-
   // dispara el modal setIsShowModal = true se mostrara
   const handleClickCloseModal = () => {
     setIsShowModal(false);
@@ -112,7 +107,6 @@ const ModalCreateUpdateAmbulancia = ({
     else{crearAmbulancia(data, reset)}
     
   };
-
   useEffect(() => {
     obtenerRedMicroredEeSs();
   }, []);
