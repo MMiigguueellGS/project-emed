@@ -6,6 +6,7 @@ import SugerenciaRed from "../layout/SugerenciaRed";
 import SugerenciaMicroRed from "../layout/SugerenciaMicroRed";
 import SugerenciaEstablecimiento from "../layout/SugerenciaEstablecimiento";
 import SugerenciasProfesion from "../layout/SugerenciasProfesion";
+import { axiosURL } from "../../configuracion/axios.config";
 const ls = localStorage
 const ModalCreateUpdatePersonalSalud = ({
   setIsShowModal,  isShowModal,  setIsPersonalSaludToUpdate,  isPersonalSaludToUpdate,  crearPersonalSalud,
@@ -25,14 +26,11 @@ const ModalCreateUpdatePersonalSalud = ({
   const [profesionInput, setProfesionInput] = useState(null)
   const [profesiones, setProfesiones] = useState([]);
 
-  const token = ls.getItem("token")
-  const headers = {
-    'Authorization': `Bearer ${token}` // Agregar el token en el header 'Authorization'
-  }
+ 
   const obtenerRedMicroredEeSs = () => {
-    const url = "http://localhost:8080/establecimientos";
-    axios
-      .get(url,{headers})
+    const url = "/establecimientos";
+    axiosURL
+      .get(url)
       .then(({ data }) => {
         // obtento los establecimientos con sus redes y micrordes
         const dataps = data.map((elem) => ({

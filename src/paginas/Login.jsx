@@ -1,45 +1,43 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { urlAxios } from "../configuracion/axios.config";
-import axios from "axios";
-const ls =localStorage
-const Login = ({setIsLogin}) => {
-  useEffect(() => {
-    
-  }, [])
-  
+import { axiosURL } from "../configuracion/axios.config";
+import { useInfoUsuario } from "../store/infoUsuario,";
 
+const Login = () => {
+  const login = useInfoUsuario((state) => state.login);
+  const setNombreEmed = useInfoUsuario((state) => state.setNombreEmed);
   const navigate = useNavigate();
   const { handleSubmit, register, reset } = useForm();
-  const submit = (data)=>{
-    setIsLogin(true)
-    console.log(data)
-    const url = "http://localhost:8080/usuarios/api/login"
-   axios
-    .post(url,data)
-    .then(({data}) => {
-      navigate("/")
-      ls.setItem('token',data.token)
-    })
-    .catch((err) => console.log(err))
-  }
+  const submit = (data) => {
+    const url = "/usuarios/api/login";
+    const emed = data.emed
+    axiosURL
+      .post(url, data)
+      .then(({ data }) => {
+        navigate("/");
+        login(data);       
+        setNombreEmed(emed)
+      })
+      .catch((err) => console.log(err));
+  };
   return (
-    <main className="font-urbanist min-h-screen bg-purple-bg text-black grid justify-stretch items-center justify-items-center  bg-right-bottom bg-no-repeat gap-12 p-4 sm:grid-cols-[auto,_auto] sm:justify-center ">
+    <main className=" bg-red-400 font-urbanist min-h-screen bg-purple-bg text-black grid justify-stretch items-center justify-items-center  bg-right-bottom bg-no-repeat gap-12 p-4 sm:grid-cols-[auto,_auto] sm:justify-center ">
       <header className="hidden sm:block sm:max-w-[350px]">
         <img src="/img/equipo.jpeg" alt="" />
       </header>
 
-      <form className="grid gap-5 w-[min(100%,_350px)] sm:w-[300px]"
-      onSubmit={handleSubmit(submit)}
+      <form
+        className="grid gap-5 w-[min(100%,_350px)] sm:w-[300px]"
+        onSubmit={handleSubmit(submit)}
       >
         <h2 className="uppercase font-semibold text-4xl">Iniciar Sesion</h2>
         <div className="grid gap-4">
           <label className="text-black " htmlFor="email">
-            Correo
+            Emed
           </label>
           <input
-            className="outline-none bg-transparent border-b border-yellow-border p-1"
+            className="outline-none bg-transparent border-b border-yellow-border p-1 uppercase"
             id="email"
             type="text"
             autoComplete="off"

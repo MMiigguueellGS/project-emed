@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Bienes from "./Bienes";
 import ModalCreateUpdateBienes from "./ModalCreateUpdateBienes";
+import { axiosURL } from "../../configuracion/axios.config";
 const vaciarFormulario = {
   codigoPatrimonial: "",
   codigoBien: "",
@@ -20,15 +21,15 @@ const AppBienes = () => {
     setIsShowModal(true);
   };
   const obtenerbienes = (codigoB) => {
-    const url = `http://localhost:8080/bienes?codigoBien=${codigoB}`;
-    axios
+    const url = `/bienes?codigoBien=${codigoB}`;
+    axiosURL
       .get(url)
       .then(({ data }) => setBienes(data))
       .catch((err) => console.log(err));
   };
   const crearBien = (newbienes, reset) => {
-    const url = "http://localhost:8080/bienes";
-    axios
+    const url = "/bienes";
+    axiosURL
       .post(url, newbienes)
       .then(({}) => {
         obtenerbienes('');
@@ -39,15 +40,15 @@ const AppBienes = () => {
       .catch((err) => console.log(err));
   };
   const eliminarBien = (id) => {
-    const url = "http://localhost:8080/bienes";
-    axios
+    const url = "/bienes";
+    axiosURL
       .delete(url + `/${id}`)
       .then(() => obtenerbienes(''))
       .catch((err) => console.log(err));
   };
   const actualizarBien = (bienes, reset) => {
-    const url = "http://localhost:8080/bienes";
-    axios
+    const url = "/bienes";
+    axiosURL
       .put(url + `/${isBienToUpdate.id}`, bienes)
       .then(({}) => {
         obtenerbienes('');

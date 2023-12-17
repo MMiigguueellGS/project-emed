@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { axiosURL } from "../../configuracion/axios.config";
 
 const ModalCreateUpdateAmbulancia = ({
   setIsShowModal,
@@ -19,8 +20,8 @@ const ModalCreateUpdateAmbulancia = ({
   const [codiRed, setCodiRed] = useState("");
   const { handleSubmit, register, reset, setValue } = useForm();
   const obtenerRedMicroredEeSs = () => {
-    const url = "http://localhost:8080/establecimientos";
-    axios
+    const url = "/establecimientos";
+    axiosURL
       .get(url)
       .then(({ data }) => {
         // obtento los establecimientos con sus redes y micrordes

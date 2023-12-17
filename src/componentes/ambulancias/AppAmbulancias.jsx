@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Ambulancias from "./Ambulancias";
 import ModalCreateUpdateAmbulancia from "./ModalCreateUpdateAmbulancia";
+import { axiosURL } from "../../configuracion/axios.config";
 const vaciarFormulario = {
   redSalud: "",
   microRed: "",
@@ -24,36 +25,36 @@ const AppAmbulancias = () => {
     setIsShowModal(true);
   };
   const obtenerAmbulancias = (placa) => {
-    const url = `http://localhost:8080/ambulancias?nPlaca=${placa}`;
-    axios
+    const url = `/ambulancias?nPlaca=${placa}`;
+    axiosURL
       .get(url)
       .then(({ data }) => setAmbulancias(data))
       .catch((err) => console.log(err));
   };
   const crearAmbulancia = (newAmbulancia, reset) => {
-    const url = "http://localhost:8080/ambulancias";
-    axios
+    const url = "/ambulancias";
+    axiosURL
       .post(url, newAmbulancia)
       .then(({}) => {
-        obtenerAmbulancias();
+        obtenerAmbulancias("");
         reset(vaciarFormulario);
         setIsShowModal(false);
       })
       .catch((err) => console.log(err));
   };
   const eliminarAmbulancia = (id) => {
-    const url = "http://localhost:8080/ambulancias";
-    axios
+    const url = "/ambulancias";
+    axiosURL
       .delete(url + `/${id}`)
-      .then(() => obtenerAmbulancias())
+      .then(() => obtenerAmbulancias(""))
       .catch((err) => console.log(err));
   };
   const actualizarAmbulancia = (Ambulancia, reset) => {
-    const url = "http://localhost:8080/ambulancias";
-    axios
+    const url = "/ambulancias";
+    axiosURL
       .put(url + `/${Ambulancia.id}`, Ambulancia)
       .then(({}) => {
-        obtenerAmbulancias();
+        obtenerAmbulancias("");
         reset(vaciarFormulario);
         setIsShowModal(false);
         setIsAmbulanciaToUpdate(null);

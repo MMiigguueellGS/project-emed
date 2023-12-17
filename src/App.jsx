@@ -13,20 +13,25 @@ import Registros from "./paginas/Registros";
 import Reportes from "./paginas/Reportes";
 import ReportePersonal from "./reportes/personalSalud/ReportePersonal";
 import Login from "./paginas/Login";
+import RutaPrivada from "./componentes/auth/RutaPrivada";
+import { useInfoUsuario } from "./store/infoUsuario,";
 const ls= localStorage
 function App() {
-  const [isLogin, setIsLogin] = useState(false)
+  const usuario = useInfoUsuario(state=> state.usuario)
+  const logout = useInfoUsuario(state => state.logout)
+  const nombreEmed = useInfoUsuario(state=> state.nombreEmed)
+  const [emed, setEmed] = useState(null)
   const navigate = useNavigate()
   const cerrarSesion = ()=>{
-    setIsLogin(false)
+    logout()
     navigate("/auth/login" )
-    ls.setItem("token","")
+   
   }
   return (
     <main className="">
       <section className="min-h-screen w-full grid grid-rows-[1fr_auto]   bg-slate-50">
         {
-          isLogin&&
+          usuario.token&&
           <nav className=" flex justify-around items-center bg-gray-600  min-w-full fixed text-white border-b-8 border-[#51c1b5]">
           <div className="w-38 text-sm py-[2px] ">
             <img className="w-16 mx-auto" src="/img/logo_emed.png" alt="" />
@@ -43,35 +48,36 @@ function App() {
               <Link to="/reportes/">REPORTES</Link>
             </li>
           </ul>
-          <button type="button" onClick={cerrarSesion} to="/auth/login">Cerrar Sesion</button>
+          <article className="flex gap-6 justify-center items-center">
+            {
+              nombreEmed&&
+            <span className="text-[#51c1b5] font-bold" >EMED  <span >{nombreEmed.toUpperCase()}</span></span>
+            }
+            <button type="button" onClick={cerrarSesion} className=" text-[#51c1b5] grid group"><i className='bx bx-power-off text-4xl'></i><span className="text-[13px] ">cerrar sesion</span></button>
+          </article>
         </nav>
         }
 
         <Routes>
-          <Route path="/auth/login" element={<Login  setIsLogin={setIsLogin}/>} />
-          <Route path="/" element={<Home setIsLogin={setIsLogin}/>} />
-          <Route path="/registros" element={<Registros setIsLogin={setIsLogin}/>} />
-          <Route path="/reportes/" element={<Reportes setIsLogin={setIsLogin} />} />
-
-          <Route path="/reportesPersonal/" element={<ReportePersonal setIsLogin={setIsLogin}/>}>
-            <Route
-              path="personalBrigadistas"
-              element={<PersonalBrigadistas />}
-            />
-            <Route path="personalModalidad" element={<PersonalModalidad />} />
+          <Route path="/auth/login" element={<Login setEmed={setEmed}/>} />
+          <Route element={<RutaPrivada/>}>
+              <Route path="/" element={<Home  />} />
+              <Route path="/registros" element={<Registros/>} />
+              <Route path="/reportes/" element={<Reportes/>} />
+              <Route path="/reportesPersonal/" element={<ReportePersonal/>}>
+                <Route
+                  path="personalBrigadistas"
+                  element={<PersonalBrigadistas />}
+                />
+                <Route path="personalModalidad" element={<PersonalModalidad />} />
+              </Route>
+              <Route  path="/reportesAmbulancias"    element={<ListaReportesPersonal />} />
+              <Route path="/reportesBienes" element={<ListaReportesPersonal  />} />
+              <Route path="/ambulancias" element={<AppAmbulancias />} />
+              <Route path="/personalSalud" element={<AppPersonalSalud  />} />
+              <Route path="/bienes" element={<AppBienes  />} />
+              <Route path="/eventos" element={<AppEventos   />} />
           </Route>
-
-          <Route
-            path="/reportesAmbulancias"
-            element={<ListaReportesPersonal setIsLogin={setIsLogin}/>}
-          />
-
-          <Route path="/reportesBienes" element={<ListaReportesPersonal setIsLogin={setIsLogin}/>} />
-
-               <Route path="/ambulancias" element={<AppAmbulancias setIsLogin={setIsLogin}/>} />
-          <Route path="/personalSalud" element={<AppPersonalSalud setIsLogin={setIsLogin}/>} />
-          <Route path="/bienes" element={<AppBienes setIsLogin={setIsLogin}/>} />
-          <Route path="/eventos" element={<AppEventos setIsLogin={setIsLogin} />} />
 
           <Route path="*" element="" />
         </Routes>

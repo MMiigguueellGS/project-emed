@@ -1,18 +1,20 @@
 import React, { useEffect } from "react";
 import YoutubeVideo from "../utiles/YoutubeVideo";
 import { useNavigate } from "react-router-dom";
+import { useInfoUsuario } from "../store/infoUsuario,";
 const ls = localStorage
-const Home = ({setIsLogin}) => {
+const Home = () => {
   const navigate= useNavigate()
+  const usuario = useInfoUsuario(state => state.usuario)
   useEffect(()=>{
    const token = ls.getItem('token');
-   if(!token) {navigate("/auth/login")}else{setIsLogin(true)}
+   if(!usuario.token) {navigate("/auth/login")}
   },[])
   const youtubeVideoUrl = "https://www.youtube.com/watch?v=DhR5raMwFO0";
   return (
     <section className="flex flex-col gap-16 w-full  bg-cover bg-center bg-imagen-home justify-center">
       <article className="text-center">
-        <h1 className="my-8 font-bold  text-3xl pt-4 text-white">
+        <h1 className="my-20 font-bold  text-3xl pt-4 text-white">
           OFICINA DE GESTION DEL RIESGO DE DESASTRES Y DEFENSA NACIONAL EN SALUD
         </h1>
       </article>

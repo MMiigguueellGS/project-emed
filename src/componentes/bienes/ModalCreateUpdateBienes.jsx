@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import SugerenciasEmed from "../layout/SugerenciasEmed";
+import { axiosURL } from "../../configuracion/axios.config";
 const ModalCreateUpdateBienes = ({
   setIsShowModal,  isShowModal,  setIsBienToUpdate,  isBienToUpdate,  crearBien,
   actualizarBien,  vaciarFormulario,  valorInputEmed,  setValorInputEmed,
@@ -10,8 +11,8 @@ const ModalCreateUpdateBienes = ({
   const { handleSubmit, register, reset, setValue } = useForm();
   const [emeds, setEmeds] = useState([]);
   const obtenerEmeds = () => {
-    const url = "http://localhost:8080/emeds";
-    axios
+    const url = "/emeds";
+    axiosURL
       .get(url)
       .then(({ data }) => setEmeds(data))
       .catch((err) => console.log(err));
