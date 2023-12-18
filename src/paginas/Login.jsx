@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { axiosURL } from "../configuracion/axios.config";
@@ -7,8 +7,9 @@ import { useInfoUsuario } from "../store/infoUsuario,";
 const Login = () => {
   const login = useInfoUsuario((state) => state.login);
   const setNombreEmed = useInfoUsuario((state) => state.setNombreEmed);
+  const [error, setError] = useState(null)
   const navigate = useNavigate();
-  const { handleSubmit, register, reset } = useForm();
+  const { handleSubmit, register } = useForm();
   const submit = (data) => {
     const url = "/usuarios/api/login";
     const emed = data.emed;
@@ -19,7 +20,7 @@ const Login = () => {
         login(data);
         setNombreEmed(emed);
       })
-      .catch((err) => console.log(err));
+      .catch((err) =>  setError(err));
   };
   return (
     <main className="  min-h-screen text-black grid items-center justify-center  gap-16  p-4 sm:grid-cols-[auto,_auto] sm:justify-center ">
@@ -62,7 +63,9 @@ const Login = () => {
           />
           <div className="text-2xl px-2 "> <i className="bx bxs-user"></i></div>
         </div>
-
+        {error && (
+  <p className="text-red-500 text-sm">{error.response && error.response.data && error.response.data.mensaje ? error.response.data.mensaje : 'Error desconocido'}</p>
+)}
         <button className=" font-semibold max-w-max absolute -bottom-10 right-0 px-6 py-1 rounded-lg bg-green-700 text-white ">
           Acceder...
         </button>
