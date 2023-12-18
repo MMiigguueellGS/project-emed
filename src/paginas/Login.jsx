@@ -29,7 +29,7 @@ const Login = () => {
         <img className="rounded-3xl" src="/img/equipo.jpeg" alt="" />
       </section>
       <form
-        className="grid gap-5 w-[min(100%,_350px)] sm:w-[300px] relative"
+        className="grid gap-3 w-[min(100%,_350px)] sm:w-[300px] relative"
         onSubmit={handleSubmit(submit)}
       >
         <header className="  w-[130px] h-[130px] mx-auto">
@@ -61,12 +61,12 @@ const Login = () => {
             placeholder="Contraseña"
             {...register("clave")}
           />
-          <div className="text-2xl px-2 "> <i className="bx bxs-user"></i></div>
+          <div className="text-2xl px-2 "> <i className='bx bxs-lock-alt'></i></div>
         </div>
         {error && (
-  <p className="text-red-500 text-sm">{error.response && error.response.data && error.response.data.mensaje ? error.response.data.mensaje : 'Error desconocido'}</p>
+  <p className="text-red-500 text-sm font-semibold">{error.response && error.response.data && error.response.data.mensaje ? error.response.data.mensaje : 'Error desconocido'}</p>
 )}
-        <button className=" font-semibold max-w-max absolute -bottom-10 right-0 px-6 py-1 rounded-lg bg-green-700 text-white ">
+        <button className=" font-semibold max-w-max absolute -bottom-12 right-0 px-6 py-1 rounded-lg bg-green-700 text-white ">
           Acceder...
         </button>
         {/* <Link className='text-center underline' to="/auth/register" >O crear una cuenta nueva</Link> */}
