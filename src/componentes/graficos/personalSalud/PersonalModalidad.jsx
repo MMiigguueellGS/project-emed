@@ -13,12 +13,13 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { axiosURL } from "../../../configuracion/axios.config";
 const PersonalModalidad = () => {
   const [personasModalidad, setPersonasModalidad] = useState(null);
 
   const obtenerData = () => {
-    const url = "http://localhost:8080/personalSalud/personasContratos";
-    axios
+    const url = "/personalSalud/personasContratos";
+    axiosURL
       .get(url)
       .then(({ data }) => setPersonasModalidad(data))
       .catch((err) => console.log(err));
@@ -83,7 +84,6 @@ const PersonalModalidad = () => {
                   cy="50%"
                   labelLine={false}
                   label={renderCustomizedLabel}
-                  outerRadius={80}
                   fill="#8884d8"
                   dataKey="value" //personasModalidad.cantidad
                   outerRadius={165}

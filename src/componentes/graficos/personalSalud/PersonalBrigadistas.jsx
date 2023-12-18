@@ -12,14 +12,15 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { axiosURL } from "../../../configuracion/axios.config";
 
 const PersonalBrigadistas = () => {
   const [numBrigadista, setNumBrigadista] = useState(null);
   const colors = ["#0088FE", "#FF0028", "#FF8042", "#d500f9"];
 
   const obtenerData = () => {
-    const url = "http://localhost:8080/personalSalud/numBrigadistas";
-    axios
+    const url = "/personalSalud/numBrigadistas";
+    axiosURL
       .get(url)
       .then(({ data }) => setNumBrigadista(data))
       .catch((err) => console.log(err));
@@ -120,8 +121,7 @@ const PersonalBrigadistas = () => {
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  label={renderCustomizedLabel}
-                  outerRadius={80}
+                  label={renderCustomizedLabel}          
                   fill="#8884d8"
                   dataKey="value" //personasModalidad.cantidad
                   outerRadius={165}

@@ -7,6 +7,7 @@ import SugerenciaMicroRed from "../layout/SugerenciaMicroRed";
 import SugerenciaEstablecimiento from "../layout/SugerenciaEstablecimiento";
 import SugerenciasProfesion from "../layout/SugerenciasProfesion";
 import { axiosURL } from "../../configuracion/axios.config";
+import { validacion, validacionDNI } from "../../servicios/personalSalud.servicio";
 const ls = localStorage
 const ModalCreateUpdatePersonalSalud = ({
   setIsShowModal,  isShowModal,  setIsPersonalSaludToUpdate,  isPersonalSaludToUpdate,  crearPersonalSalud,
@@ -20,13 +21,14 @@ const ModalCreateUpdatePersonalSalud = ({
   const [microRedInput, setMicroRedInput] = useState(null);
   const [isEstablecimiento, setIsEstablecimiento] = useState(null);
   const [establecimientoInput, setEstablecimientoInput] = useState(null); // ESTABLECIMIENTOS con su red , microred
-  const { handleSubmit, register, reset, setValue } = useForm();
+  
   const [contratos, setContratos] = useState([]);
   const [brigadista, setBrigadista] = useState("");
   const [profesionInput, setProfesionInput] = useState(null)
   const [profesiones, setProfesiones] = useState([]);
 
- 
+  const { handleSubmit, register, reset, setValue,formState:{errors} } = useForm();
+   console.log(errors)
   const obtenerRedMicroredEeSs = () => {
     const url = "/establecimientos";
     axiosURL
@@ -163,8 +165,8 @@ const ModalCreateUpdatePersonalSalud = ({
     setEstablecimientoInput(null);
   };
   const obtenerProfesiones = () => {
-    const url = "http://localhost:8080/profesiones";
-    axios
+    const url = "/profesiones";
+    axiosURL
       .get(url)
       .then(({ data }) => setProfesiones(data))
       .catch((err) => console.log(err));
@@ -222,9 +224,7 @@ const ModalCreateUpdatePersonalSalud = ({
     setValorInputEstablecimiento("");
     setRedInput(null);
   };
-  const submit = (data) => {
-    console.log(data)   ;
-
+  const submit = (data) => {  
     if (isPersonalSaludToUpdate) {
       const eess = isPersonalSaludToUpdate.PersonalSaludEstablecimiento.NombreEstablecimiento.toLowerCase()
       const idEstablecimiento = hallarIdEstablecimiento(eess);     
@@ -378,15 +378,19 @@ const ModalCreateUpdatePersonalSalud = ({
                 {...register("apellidos")}
               />
             </div>
-            <div className="flex gap-2 ">
+            <div className="flex gap-2 flex-col justify-center items-center">
               {/* <label htmlFor="email">Red de salud</label> */}
               <input
                 className="outline-none  bg-transparent border-b border-[#80CBC4] p-2 text-center placeholder:text-[#26A69A] text-[#26A69A] font-semibold"
                 name="dni"
-                type="text"
+                type="text" 
                 placeholder="DNI ... "
-                {...register("dni")}
+                {...register("dni",validacionDNI)}
+                autoComplete="off"
               />
+              {
+                errors.dni&& <p className="text-red-500 text-xs">{errors.dni.message}</p>
+              }
             </div>
           </section>
 

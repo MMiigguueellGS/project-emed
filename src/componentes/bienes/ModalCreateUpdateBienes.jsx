@@ -108,7 +108,7 @@ const ModalCreateUpdateBienes = ({
           {isBienToUpdate ? "Editar Bien" : "Crear Bien"}
         </h2>
         <section className="grid grid-cols-1  sm:grid-cols-2 ">
-          <section className=" grid justify-center">
+          <section className=" grid justify-center items-center ">
             <div className="flex gap-2 ">
               {/* <label htmlFor="email">Red de salud</label> */}
               <input
@@ -140,7 +140,7 @@ const ModalCreateUpdateBienes = ({
               />
             </div>
           </section>
-          <section className=" grid justify-center">
+          <section className=" grid justify-center items-center">
             <div className="flex gap-2 ">
               {/* <label htmlFor="password">Micro red</label> */}
               <input

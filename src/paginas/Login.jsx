@@ -11,57 +11,60 @@ const Login = () => {
   const { handleSubmit, register, reset } = useForm();
   const submit = (data) => {
     const url = "/usuarios/api/login";
-    const emed = data.emed
+    const emed = data.emed;
     axiosURL
       .post(url, data)
       .then(({ data }) => {
         navigate("/");
-        login(data);       
-        setNombreEmed(emed)
+        login(data);
+        setNombreEmed(emed);
       })
       .catch((err) => console.log(err));
   };
   return (
-    <main className=" bg-red-400 font-urbanist min-h-screen bg-purple-bg text-black grid justify-stretch items-center justify-items-center  bg-right-bottom bg-no-repeat gap-12 p-4 sm:grid-cols-[auto,_auto] sm:justify-center ">
-      <header className="hidden sm:block sm:max-w-[350px]">
-        <img src="/img/equipo.jpeg" alt="" />
-      </header>
-
+    <main className="  min-h-screen text-black grid items-center justify-center  gap-16  p-4 sm:grid-cols-[auto,_auto] sm:justify-center ">
+      
+      <section className="hidden sm:block sm:max-w-[450px] rounded-3xl  shadow-2xl shadow-slate-500">
+        <img className="rounded-3xl" src="/img/equipo.jpeg" alt="" />
+      </section>
       <form
-        className="grid gap-5 w-[min(100%,_350px)] sm:w-[300px]"
+        className="grid gap-5 w-[min(100%,_350px)] sm:w-[300px] relative"
         onSubmit={handleSubmit(submit)}
       >
-        <h2 className="uppercase font-semibold text-4xl">Iniciar Sesion</h2>
-        <div className="grid gap-4">
-          <label className="text-black " htmlFor="email">
-            Emed
-          </label>
+        <header className="  w-[130px] h-[130px] mx-auto">
+        <img src="/img/logo_emed.png" alt="" />
+      </header>
+        <h2 className=" font-semibold text-4xl text-center">Bienvenidos</h2>
+        <h3 className="text-center">Ingresar Nombre del Emed y Contraseña</h3>
+        <div className="flex border-2 border-blue-400 justify-between items-center">
           <input
-            className="outline-none bg-transparent border-b border-yellow-border p-1 uppercase"
+            className="outline-none flex-1 bg-blue-200  p-2 uppercase placeholder:text-green-600"
             id="email"
             type="text"
             autoComplete="off"
             name="emed"
+            placeholder="Emed"
             {...register("emed")}
           />
+         <div className="text-2xl px-2"> <i className="bx bxs-user"></i></div>
         </div>
 
-        <div className="grid gap-4">
-          <label className="text-black" htmlFor="password">
-            Contraseña
-          </label>
+        <div className="flex border-2 border-blue-400 justify-between items-center">
+         
           <input
-            className="outline-none bg-transparent border-b border-yellow-border p-1"
+            className="outline-none flex-1 bg-blue-200 border-b border-yellow-border placeholder:text-green-600 p-2"
             id="password"
             type="password"
             autoComplete="off"
             name="clave"
+            placeholder="Contraseña"
             {...register("clave")}
           />
+          <div className="text-2xl px-2 "> <i className="bx bxs-user"></i></div>
         </div>
 
-        <button className="bg-purple-light uppercase font-semibold max-w-max mx-auto px-6 py-1 rounded-full ">
-          Entrar
+        <button className=" font-semibold max-w-max absolute -bottom-10 right-0 px-6 py-1 rounded-lg bg-green-700 text-white ">
+          Acceder...
         </button>
         {/* <Link className='text-center underline' to="/auth/register" >O crear una cuenta nueva</Link> */}
       </form>
