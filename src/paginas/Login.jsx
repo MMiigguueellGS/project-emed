@@ -66,7 +66,7 @@ const Login = () => {
         {error && (
   <p className="text-red-500 text-sm font-semibold">{error.response && error.response.data && error.response.data.mensaje ? error.response.data.mensaje : 'Error desconocido'}</p>
 )}
-        <button className=" font-semibold max-w-max absolute -bottom-12 right-0 px-6 py-1 rounded-lg bg-green-700 text-white ">
+        <button className=" font-semibold max-w-max absolute -bottom-14 right-0 px-6 py-2 rounded-lg bg-green-700 text-white ">
           Acceder...
         </button>
         {/* <Link className='text-center underline' to="/auth/register" >O crear una cuenta nueva</Link> */}
