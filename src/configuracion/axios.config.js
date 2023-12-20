@@ -1,6 +1,6 @@
 import axios from "axios";
 const axiosURL = axios.create({
-  baseURL: 'http://localhost:8080'
+  baseURL: 'https://api-emed-emergencias-desastres-dev-jjxt.1.us-1.fl0.io'
 });
 axiosURL.interceptors.request.use((config)=> {
   config.headers.Authorization = `Bearer ${
