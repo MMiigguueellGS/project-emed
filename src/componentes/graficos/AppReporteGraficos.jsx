@@ -1,11 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { axiosURL } from '../../configuracion/axios.config';
 
 const AppReporteGraficos = () => {
 const [totales, setTotales] = useState(null)
   useEffect(() => {
-    const url = `http://localhost:8080/personalSalud/totales`;
-    axios
+    const url = `/personalSalud/totales`;
+    axiosURL
       .get(url)
       .then(({ data }) =>  setTotales(data))
       .catch((err) => console.log(err));
