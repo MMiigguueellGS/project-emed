@@ -86,8 +86,8 @@ const ModalCreateUpdatePersonalSalud = ({
       .catch((err) => console.log(err));
   };
   const obtenerContratos = () => {
-    const url = "http://localhost:8080/contratos";
-    axios
+    const url = "/contratos";
+    axiosURL
       .get(url)
       .then(({ data }) => setContratos(data))
       .catch((err) => console.log(err));
