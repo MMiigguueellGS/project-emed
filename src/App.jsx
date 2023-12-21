@@ -70,7 +70,9 @@ function App() {
                   element={<PersonalBrigadistas />}
                 />
                 <Route path="personalModalidad" element={<PersonalModalidad />} />
+                <Route path="personalModalidad" element={<PersonalModalidad />} />
               </Route>
+
               <Route  path="/reportesAmbulancias"    element={<ListaReportesPersonal />} />
               <Route path="/reportesBienes" element={<ListaReportesPersonal  />} />
               <Route path="/ambulancias" element={<AppAmbulancias />} />
