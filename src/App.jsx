@@ -1,19 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import AppAmbulancias from "./componentes/ambulancias/AppAmbulancias";
+import RutaPrivada from "./componentes/auth/RutaPrivada";
 import AppBienes from "./componentes/bienes/AppBienes";
-import AppEventos from "./componentes/eventos/AppEventos";
 import PersonalBrigadistas from "./componentes/graficos/personalSalud/PersonalBrigadistas";
 import PersonalModalidad from "./componentes/graficos/personalSalud/PersonalModalidad";
 import ListaReportesPersonal from "./componentes/layout/ListaReportesPersonal";
 import AppPersonalSalud from "./componentes/personalSalud/AppPersonalSalud";
 import Home from "./paginas/Home";
+import Login from "./paginas/Login";
 import Registros from "./paginas/Registros";
 import Reportes from "./paginas/Reportes";
 import ReportePersonal from "./reportes/personalSalud/ReportePersonal";
-import Login from "./paginas/Login";
-import RutaPrivada from "./componentes/auth/RutaPrivada";
 import { useInfoUsuario } from "./store/infoUsuario,";
 const ls= localStorage
 function App() {
@@ -78,7 +77,7 @@ function App() {
               <Route path="/ambulancias" element={<AppAmbulancias />} />
               <Route path="/personalSalud" element={<AppPersonalSalud  />} />
               <Route path="/bienes" element={<AppBienes  />} />
-              <Route path="/eventos" element={<AppEventos   />} />
+           
           </Route>
 
           <Route path="*" element="" />

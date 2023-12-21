@@ -12,9 +12,7 @@ const Registros = () => {
     <LinkModulo icono= {<i className='bx bx-store-alt' ></i>} ruta={"/bienes"}>
     Gestion y registros de Bienes
     </LinkModulo>
-    <LinkModulo icono= {<i className='bx bxs-ambulance'></i>} ruta={"/eventos"}>
-    Gestion y registros de eventos que causan danios a la salud
-    </LinkModulo>
+  
     </section>
   )
 }

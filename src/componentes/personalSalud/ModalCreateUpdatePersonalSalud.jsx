@@ -463,9 +463,9 @@ const ModalCreateUpdatePersonalSalud = ({
                   onChange: (e) => changeSelectBrigadista(e),
                 })}
               >
-                <option value="">Seleccion brigadista... </option>
+                <option value="">selecciona tu brigadista </option>
+                <option value="No Brigadista ">No Brigadista </option>
                 <option value="Intervención Inicial">
-                  {" "}
                   Intervención Inicial
                 </option>
                 <option value="Hospitalario ">Hospitalario </option>
